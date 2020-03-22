@@ -89,4 +89,9 @@ class ConsoleModele
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->console . ' ' . $this->nom;
+    }
 }

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ConsoleModele index{% endblock %}
+
+{% block body %}
+    <h1>ConsoleModele index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prix</th>
+                <th>Nom</th>
+                <th>DateSortie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for console_modele in console_modeles %}
+            <tr>
+                <td>{{ console_modele.id }}</td>
+                <td>{{ console_modele.prix }}</td>
+                <td>{{ console_modele.nom }}</td>
+                <td>{{ console_modele.dateSortie ? console_modele.dateSortie|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('console_modele_show', {'id': console_modele.id}) }}">show</a>
+                    <a href="{{ path('console_modele_edit', {'id': console_modele.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('console_modele_new') }}">Create new</a>
+{% endblock %}

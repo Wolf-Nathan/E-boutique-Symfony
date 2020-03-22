@@ -10,10 +10,12 @@
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>AgeMini</th>
+                <th>Age recommandé</th>
                 <th>Description</th>
                 <th>Prix</th>
-                <th>DateSortie</th>
+                <th>Consoles</th>
+                <th>Marque</th>
+                <th>Date de sortie</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,8 +26,17 @@
                 <td>{{ jeux.nom }}</td>
                 <td>{{ jeux.ageMini }}</td>
                 <td>{{ jeux.description }}</td>
-                <td>{{ jeux.prix }}</td>
-                <td>{{ jeux.dateSortie ? jeux.dateSortie|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ jeux.prix }}€</td>
+                <td>
+                    {%  for key, console in jeux.console %}
+                        {% if key > 0 %}
+                         ,
+                        {% endif %}
+                        {{ console }}
+                    {% endfor %}
+                </td>
+                <td>{{ jeux.marque }}</td>
+                <td>{{ jeux.dateSortie ? jeux.dateSortie|date('d-m-Y') : '' }}</td>
                 <td>
                     <a href="{{ path('jeux_show', {'id': jeux.id}) }}">show</a>
                     <a href="{{ path('jeux_edit', {'id': jeux.id}) }}">edit</a>

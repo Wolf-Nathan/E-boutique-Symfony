@@ -90,6 +90,10 @@ class ConsoleModele
         return $this;
     }
 
+    public function getMarque() {
+        return $this->console->getMarque();
+    }
+
     public function __toString()
     {
         return $this->console . ' ' . $this->nom;

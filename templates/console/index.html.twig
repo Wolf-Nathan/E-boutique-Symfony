@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
+                <th>Marque</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
             <tr>
                 <td>{{ console.id }}</td>
                 <td>{{ console.nom }}</td>
+                <td>{{ console.marque }}</td>
                 <td>
                     <a href="{{ path('console_show', {'id': console.id}) }}">show</a>
                     <a href="{{ path('console_edit', {'id': console.id}) }}">edit</a>
@@ -25,7 +27,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucune console trouvée !</td>
             </tr>
         {% endfor %}
         </tbody>

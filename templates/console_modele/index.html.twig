@@ -10,8 +10,10 @@
             <tr>
                 <th>Id</th>
                 <th>Prix</th>
-                <th>Nom</th>
-                <th>DateSortie</th>
+                <th>Console</th>
+                <th>Modèle</th>
+                <th>Marque</th>
+                <th>Date de sortie</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,9 +21,11 @@
         {% for console_modele in console_modeles %}
             <tr>
                 <td>{{ console_modele.id }}</td>
-                <td>{{ console_modele.prix }}</td>
+                <td>{{ console_modele.prix }}€</td>
+                <td>{{ console_modele.console }}</td>
                 <td>{{ console_modele.nom }}</td>
-                <td>{{ console_modele.dateSortie ? console_modele.dateSortie|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ console_modele.marque }}</td>
+                <td>{{ console_modele.dateSortie ? console_modele.dateSortie|date('d-m-Y') : '' }}</td>
                 <td>
                     <a href="{{ path('console_modele_show', {'id': console_modele.id}) }}">show</a>
                     <a href="{{ path('console_modele_edit', {'id': console_modele.id}) }}">edit</a>

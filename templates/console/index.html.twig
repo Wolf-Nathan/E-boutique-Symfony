@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Marque</th>
+                <th>Jeux</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +21,14 @@
                 <td>{{ console.id }}</td>
                 <td>{{ console.nom }}</td>
                 <td>{{ console.marque }}</td>
+                <td>
+                    {% for key,jeu in console.jeux %}
+                        {% if key > 0 %}
+                        ,
+                        {% endif %}
+                        {{ jeu }}
+                    {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('console_show', {'id': console.id}) }}">show</a>
                     <a href="{{ path('console_edit', {'id': console.id}) }}">edit</a>

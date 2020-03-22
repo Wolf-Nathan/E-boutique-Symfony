@@ -1,0 +1,101 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\ConsoleRepository")
+ */
+class Console
+{
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Marque", inversedBy="consoles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $marque;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ConsoleModele", mappedBy="console")
+     */
+    private $consoleModeles;
+
+    public function __construct()
+    {
+        $this->consoleModeles = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marque $marque): self
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ConsoleModele[]
+     */
+    public function getConsoleModeles(): Collection
+    {
+        return $this->consoleModeles;
+    }
+
+    public function addConsoleModele(ConsoleModele $consoleModele): self
+    {
+        if (!$this->consoleModeles->contains($consoleModele)) {
+            $this->consoleModeles[] = $consoleModele;
+            $consoleModele->setConsole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConsoleModele(ConsoleModele $consoleModele): self
+    {
+        if ($this->consoleModeles->contains($consoleModele)) {
+            $this->consoleModeles->removeElement($consoleModele);
+            // set the owning side to null (unless already changed)
+            if ($consoleModele->getConsole() === $this) {
+                $consoleModele->setConsole(null);
+            }
+        }
+
+        return $this;
+    }
+}

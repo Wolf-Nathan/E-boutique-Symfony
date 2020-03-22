@@ -32,6 +32,11 @@ class ConsoleModele
      */
     private $nom;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateSortie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class ConsoleModele
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getDateSortie(): ?\DateTimeInterface
+    {
+        return $this->dateSortie;
+    }
+
+    public function setDateSortie(?\DateTimeInterface $dateSortie): self
+    {
+        $this->dateSortie = $dateSortie;
 
         return $this;
     }

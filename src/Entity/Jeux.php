@@ -49,6 +49,11 @@ class Jeux
      */
     private $console;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateSortie;
+
     public function __construct()
     {
         $this->console = new ArrayCollection();
@@ -141,6 +146,18 @@ class Jeux
         if ($this->console->contains($console)) {
             $this->console->removeElement($console);
         }
+
+        return $this;
+    }
+
+    public function getDateSortie(): ?\DateTimeInterface
+    {
+        return $this->dateSortie;
+    }
+
+    public function setDateSortie(?\DateTimeInterface $dateSortie): self
+    {
+        $this->dateSortie = $dateSortie;
 
         return $this;
     }

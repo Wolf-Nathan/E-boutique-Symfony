@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,22 @@ class Jeux
      * @ORM\Column(type="float")
      */
     private $prix;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Marque", inversedBy="jeux")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $marque;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Console", inversedBy="jeux")
+     */
+    private $console;
+
+    public function __construct()
+    {
+        $this->console = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,6 +103,44 @@ class Jeux
     public function setPrix(float $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marque $marque): self
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Console[]
+     */
+    public function getConsole(): Collection
+    {
+        return $this->console;
+    }
+
+    public function addConsole(Console $console): self
+    {
+        if (!$this->console->contains($console)) {
+            $this->console[] = $console;
+        }
+
+        return $this;
+    }
+
+    public function removeConsole(Console $console): self
+    {
+        if ($this->console->contains($console)) {
+            $this->console->removeElement($console);
+        }
 
         return $this;
     }

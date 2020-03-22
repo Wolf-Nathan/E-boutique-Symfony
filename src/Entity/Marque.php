@@ -28,9 +28,15 @@ class Marque
      */
     private $consoles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Jeux", mappedBy="marque")
+     */
+    private $jeux;
+
     public function __construct()
     {
         $this->consoles = new ArrayCollection();
+        $this->jeux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,37 @@ class Marque
             // set the owning side to null (unless already changed)
             if ($console->getMarque() === $this) {
                 $console->setMarque(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Jeux[]
+     */
+    public function getJeux(): Collection
+    {
+        return $this->jeux;
+    }
+
+    public function addJeux(Jeux $jeux): self
+    {
+        if (!$this->jeux->contains($jeux)) {
+            $this->jeux[] = $jeux;
+            $jeux->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJeux(Jeux $jeux): self
+    {
+        if ($this->jeux->contains($jeux)) {
+            $this->jeux->removeElement($jeux);
+            // set the owning side to null (unless already changed)
+            if ($jeux->getMarque() === $this) {
+                $jeux->setMarque(null);
             }
         }
 

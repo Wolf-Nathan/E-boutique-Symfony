@@ -34,9 +34,15 @@ class Console
      */
     private $consoleModeles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Jeux", mappedBy="console")
+     */
+    private $jeux;
+
     public function __construct()
     {
         $this->consoleModeles = new ArrayCollection();
+        $this->jeux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +100,34 @@ class Console
             if ($consoleModele->getConsole() === $this) {
                 $consoleModele->setConsole(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Jeux[]
+     */
+    public function getJeux(): Collection
+    {
+        return $this->jeux;
+    }
+
+    public function addJeux(Jeux $jeux): self
+    {
+        if (!$this->jeux->contains($jeux)) {
+            $this->jeux[] = $jeux;
+            $jeux->addConsole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJeux(Jeux $jeux): self
+    {
+        if ($this->jeux->contains($jeux)) {
+            $this->jeux->removeElement($jeux);
+            $jeux->removeConsole($this);
         }
 
         return $this;

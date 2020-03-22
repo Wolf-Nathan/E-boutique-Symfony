@@ -2,6 +2,9 @@
 {% if is_granted('ROLE_ADMIN') %}
     <h3>Vous êtes connecté en tant qu'administrateur.</h3>
 {% endif %}
+{% if app.user %}
+    <h5>Bonjour {{ app.user.username }}</h5>
+{% endif %}
 <ul>
     <li>
         <a href="{{ path('jeux_list') }}">Jeux</a>

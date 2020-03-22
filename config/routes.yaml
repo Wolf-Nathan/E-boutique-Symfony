@@ -1,3 +1,15 @@
 index:
     path: /
     controller: App\Controller\DefaultController::index
+jeux_list:
+    path: /jeux/
+    controller:  App\Controller\JeuxController::index
+console_list:
+    path: /console/
+    controller:  App\Controller\ConsoleController::index
+console_modele_list:
+    path: /consoleModele/
+    controller:  App\Controller\ConsoleModeleController::index
+marque_list:
+    path: /marque/
+    controller:  App\Controller\MarqueController::index

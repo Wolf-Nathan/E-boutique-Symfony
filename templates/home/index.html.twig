@@ -1,1 +1,18 @@
 <h1>Bienvenue sur notre boutique !</h1>
+{% if is_granted('ROLE_ADMIN') %}
+    <h3>Vous êtes connecté en tant qu'administrateur.</h3>
+{% endif %}
+<ul>
+    <li>
+        <a href="{{ path('jeux_list') }}">Jeux</a>
+    </li>
+    <li>
+        <a href="{{ path('console_list') }}">Consoles</a>
+    </li>
+    <li>
+        <a href="{{ path('console_modele_list') }}">Modèles de console</a>
+    </li>
+    <li>
+        <a href="{{ path('marque_list') }}">Marques</a>
+    </li>
+</ul>

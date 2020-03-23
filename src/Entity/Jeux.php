@@ -54,9 +54,15 @@ class Jeux
      */
     private $dateSortie;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="jeux")
+     */
+    private $media;
+
     public function __construct()
     {
         $this->console = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,5 +171,36 @@ class Jeux
     public function __toString()
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->setJeux($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            // set the owning side to null (unless already changed)
+            if ($medium->getJeux() === $this) {
+                $medium->setJeux(null);
+            }
+        }
+
+        return $this;
     }
 }

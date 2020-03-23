@@ -39,10 +39,16 @@ class Console
      */
     private $jeux;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="console")
+     */
+    private $media;
+
     public function __construct()
     {
         $this->consoleModeles = new ArrayCollection();
         $this->jeux = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,5 +142,36 @@ class Console
     public function __toString()
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->setConsole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            // set the owning side to null (unless already changed)
+            if ($medium->getConsole() === $this) {
+                $medium->setConsole(null);
+            }
+        }
+
+        return $this;
     }
 }

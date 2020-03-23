@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class ConsoleModele
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateSortie;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="ConsoleModele")
+     */
+    private $media;
+
+    public function __construct()
+    {
+        $this->media = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -97,5 +109,36 @@ class ConsoleModele
     public function __toString()
     {
         return $this->console . ' ' . $this->nom;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->setConsoleModele($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            // set the owning side to null (unless already changed)
+            if ($medium->getConsoleModele() === $this) {
+                $medium->setConsoleModele(null);
+            }
+        }
+
+        return $this;
     }
 }

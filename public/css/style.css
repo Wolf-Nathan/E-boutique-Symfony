@@ -74,3 +74,15 @@ footer{
     width: 100px;
     height: 140px;
 }
+
+.visuel_central {
+    margin-left: 550px;
+    width: 400px;
+    height: 600px;
+}
+
+.addToCart {
+    border: solid red 5px;
+    color: white;
+    background-color: red;
+}

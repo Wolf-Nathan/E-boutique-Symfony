@@ -1,9 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Jeux{% endblock %}
+{% block title %}{{ jeux.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Jeux</h1>
+    <h1 class="mb-4">{{ jeux.nom }}</h1>
+
+    <div class="mb-4">
+        <img class="visuel_central" src="{{ jeux.media[0] }}" alt="{{ jeux.nom }}"/>
+        <a class="addToCart" href="{{ path('jeux_panier', {'id': jeux.id}) }}">Ajouter au panier</a>
+    </div>
+
 
     <table class="table">
         <tbody>
@@ -16,6 +22,21 @@
                 <td>{{ jeux.nom }}</td>
             </tr>
             <tr>
+                <th>Console</th>
+                <td>
+                    {% for key, console in jeux.console %}
+                        {% if key > 0 %}
+                        ,
+                        {% endif %}
+                        {{ console.nom }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Marque</th>
+                <td>{{ jeux.marque }}</td>
+            </tr>
+            <tr>
                 <th>AgeMini</th>
                 <td>{{ jeux.ageMini }}</td>
             </tr>
@@ -25,18 +46,18 @@
             </tr>
             <tr>
                 <th>Prix</th>
-                <td>{{ jeux.prix }}</td>
+                <td>{{ jeux.prix }}€</td>
             </tr>
             <tr>
-                <th>DateSortie</th>
-                <td>{{ jeux.dateSortie ? jeux.dateSortie|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Date de sortie</th>
+                <td>{{ jeux.dateSortie ? jeux.dateSortie|date('d/m/Y') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('jeux_index') }}">back to list</a>
+    <a href="{{ path('jeux_index') }}">Liste des jeux</a>
 
-    <a href="{{ path('jeux_edit', {'id': jeux.id}) }}">edit</a>
+    <a href="{{ path('jeux_edit', {'id': jeux.id}) }}">Editer le jeu</a>
 
     {{ include('jeux/_delete_form.html.twig') }}
 {% endblock %}

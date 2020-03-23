@@ -53,6 +53,9 @@ class JeuxController extends AbstractController
      */
     public function show(Jeux $jeux): Response
     {
+        if(isset($_SESSION)){
+            var_dump($_SESSION);
+        }
         return $this->render('jeux/show.html.twig', [
             'jeux' => $jeux,
         ]);
@@ -90,5 +93,21 @@ class JeuxController extends AbstractController
         }
 
         return $this->redirectToRoute('jeux_index');
+    }
+
+    /**
+     * @Route("/{id}/panier", name="jeux_panier", methods={"GET", "POST"})
+     */
+    public function addToCart(Jeux $jeux){
+        if(isset($_SESSION)){
+            $_SESSION['jeux'][] = $jeux;
+        }
+        else{
+            $_SESSION = array();
+            $_SESSION['jeux'][] = $jeux;
+        }
+        return $this->render('jeux/show.html.twig', [
+            'jeux' => $jeux
+        ]);
     }
 }

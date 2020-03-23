@@ -7,6 +7,27 @@
         <h2>Votre panier</h2>
     {% endif %}
     {% if totalArticles > 0 %}
+        {% if totalConsole > 0 %}
+            {% for console in consoles %}
+                <p>{{ console.nom }}</p>
+                <p>{{ console.prix }}</p>
+            {% endfor %}
+            <p>Nombre de consoles dans le panier : {{ totalConsole }}</p>
+            <p>Prix : {{ totalPrixConsole }}</p>
+        {% endif %}
+        {% if totalJeux > 0 %}
+            {% for jeu in jeux %}
+                <p>{{ jeu.nom }}</p>
+                <p>Prix : {{ jeu.prix }}</p>
+            {% endfor %}
+            <p>Nombre de jeux dans le panier : {{ totalJeux }}</p>
+            <p>Prix : {{ totalPrixJeux }}</p>
+        {% endif %}
+        <p>Nombre total d'articles dans le panier : {{ totalArticles }}</p>
+        <p>Coût total du panier : {{ totalPrix }}</p>
+
+        <a href="">Valider le panier</a>
+
     {% else %}
         <h1>Votre panier est vide !</h1>
     {% endif %}

@@ -17,3 +17,6 @@ login:
     path: /login
 logout:
     path: /logout
+panier:
+    path: /panier
+    controller: App\Controller\PanierController::index

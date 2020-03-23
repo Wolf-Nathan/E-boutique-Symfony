@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if app.user %}
+        <h2> Votre panier {{ app.user.username }}</h2>
+    {% else %}
+        <h2>Votre panier</h2>
+    {% endif %}
+    {% if totalArticles > 0 %}
+    {% else %}
+        <h1>Votre panier est vide !</h1>
+    {% endif %}
+{% endblock body %}

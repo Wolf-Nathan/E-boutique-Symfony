@@ -16,6 +16,7 @@
                 <th>Consoles</th>
                 <th>Marque</th>
                 <th>Date de sortie</th>
+                <th>Boite</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -37,6 +38,7 @@
                 </td>
                 <td>{{ jeux.marque }}</td>
                 <td>{{ jeux.dateSortie ? jeux.dateSortie|date('d-m-Y') : '' }}</td>
+                <td><img class="jaquette_liste" src="{{ jeux.media[0] }}" alt="Jaquette"></td>
                 <td>
                     <a href="{{ path('jeux_show', {'id': jeux.id}) }}">show</a>
                     <a href="{{ path('jeux_edit', {'id': jeux.id}) }}">edit</a>

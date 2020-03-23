@@ -62,3 +62,9 @@ body h1 {
 footer{
     background-color : royalblue;
 }
+
+/* jeux */
+.jaquette_liste {
+    width: 100px;
+    height: 140px;
+}

@@ -21,36 +21,36 @@
             </tr>
         </thead>
         <tbody>
-        {% for jeux in jeuxes %}
+        {% for jeu in jeux %}
             <tr>
-                <td>{{ jeux.id }}</td>
-                <td>{{ jeux.nom }}</td>
-                <td>{{ jeux.ageMini }}</td>
-                <td>{{ jeux.description }}</td>
-                <td>{{ jeux.prix }}€</td>
+                <td>{{ jeu.id }}</td>
+                <td>{{ jeu.nom }}</td>
+                <td>{{ jeu.ageMini }}</td>
+                <td>{{ jeu.description }}</td>
+                <td>{{ jeu.prix }}€</td>
                 <td>
-                    {%  for key, console in jeux.console %}
+                    {%  for key, console in jeu.console %}
                         {% if key > 0 %}
                          ,
                         {% endif %}
                         {{ console }}
                     {% endfor %}
                 </td>
-                <td>{{ jeux.marque }}</td>
-                <td>{{ jeux.dateSortie ? jeux.dateSortie|date('d-m-Y') : '' }}</td>
-                <td><img class="jaquette_liste" src="{{ jeux.media[0] }}" alt="Jaquette"></td>
+                <td>{{ jeu.marque }}</td>
+                <td>{{ jeu.dateSortie ? jeu.dateSortie|date('d-m-Y') : '' }}</td>
+                <td><img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="Jaquette"></td>
                 <td>
-                    <a href="{{ path('jeux_show', {'id': jeux.id}) }}">show</a>
-                    <a href="{{ path('jeux_edit', {'id': jeux.id}) }}">edit</a>
+                    <a href="{{ path('jeux_show', {'id': jeu.id}) }}">Voir</a>
+                    <a href="{{ path('jeux_edit', {'id': jeu.id}) }}">Editer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucun jeu trouvé !</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('jeux_new') }}">Create new</a>
+    <a href="{{ path('jeux_new') }}">Ajouter un jeu</a>
 {% endblock %}

@@ -63,6 +63,12 @@ footer{
     background-color : royalblue;
 }
 
+/* homepage */
+.logo {
+    height : 80px;
+    width: 150px;
+}
+
 /* jeux */
 .jaquette_liste {
     width: 100px;

@@ -22,4 +22,34 @@
             <a href="{{ path('marque_list') }}">Marques</a>
         </li>
     </ul>
+    <div class="ml-3">
+        <h3>Nos jeux</h3>
+        <div class="ml-3">
+            <button> < </button>
+            {% for jeu in jeux %}
+                <a class="ml-3" href="{{ path('jeux_show', {'id': jeu.id}) }}">
+                    {% if getLength(jeu.media) %}
+                        <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="{{ jeu.nom }}">
+                    {% else %}
+                        {{ jeu.nom }}
+                    {% endif %}
+                </a>
+            {% endfor %}
+            <button class="ml-3"> > </button>
+        </div>
+    </div>
+    <div class="ml-3">
+        <h3>Nos marques</h3>
+        <button> < </button>
+        {% for marque in marques %}
+            <a class="ml-3" href="{{ path('marque_show', {'id': marque.id}) }}">
+                {%if getLength(marque.media) %}
+                    <img class="logo" src="{{ marque.media[0] }}" alt="{{ marque.nom }}">
+                {%else %}
+                    {{ marque.nom }}
+                {%endif %}
+            </a>
+        {% endfor %}
+        <button class="ml-3"> > </button>
+    </div>
 {% endblock body %}

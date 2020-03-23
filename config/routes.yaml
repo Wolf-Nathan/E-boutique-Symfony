@@ -13,3 +13,7 @@ console_modele_list:
 marque_list:
     path: /marque/
     controller:  App\Controller\MarqueController::index
+login:
+    path: /login
+logout:
+    path: /logout

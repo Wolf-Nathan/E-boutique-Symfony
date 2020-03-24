@@ -38,7 +38,12 @@
                 </td>
                 <td>{{ jeu.marque }}</td>
                 <td>{{ jeu.dateSortie ? jeu.dateSortie|date('d-m-Y') : '' }}</td>
-                <td><img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="Jaquette"></td>
+                <td>
+                    {% if getLength(jeu.media) > 0 %}
+                        <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="Jaquette"></td>
+                    {% else %}
+                        Aucune image trouvée
+                    {% endif %}
                 <td>
                     <a href="{{ path('jeux_show', {'id': jeu.id}) }}">Voir</a>
                     <a href="{{ path('jeux_edit', {'id': jeu.id}) }}">Editer</a>

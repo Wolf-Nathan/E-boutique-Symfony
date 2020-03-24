@@ -10,8 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Type</th>
-                <th>Path</th>
-                <th>Alt</th>
+                <th>Image</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,8 +19,7 @@
             <tr>
                 <td>{{ medium.id }}</td>
                 <td>{{ medium.type }}</td>
-                <td>{{ medium.path }}</td>
-                <td>{{ medium.alt }}</td>
+                <td><img class="img-media-list" src="{{ medium.path }}" alt="{{ medium.alt }}"/></td>
                 <td>
                     <a href="{{ path('media_show', {'id': medium.id}) }}">show</a>
                     <a href="{{ path('media_edit', {'id': medium.id}) }}">edit</a>

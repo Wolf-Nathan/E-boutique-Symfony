@@ -87,3 +87,9 @@ footer{
     background-color: red;
     padding: 5px;
 }
+
+/* media */
+.img-media-list{
+    width: 100px;
+    height: 100px;
+}

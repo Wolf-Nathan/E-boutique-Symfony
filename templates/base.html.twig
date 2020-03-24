@@ -16,12 +16,14 @@
                 <ul class="list-unstyled row pl-0">
                     <li><a href="{{ path('jeux_list') }}">Jeux</a></li>
                     <li><a href="{{ path('console_list') }}">Consoles</a></li>
-                    <li><a href="{{ path('marque_list') }}">Marque</a></li>
+                    <li><a href="{{ path('marque_list') }}">Marques</a></li>
                     <li><a href="{{ path('index') }}"><img src="{{ asset('images/logoBoutique.png') }}" alt="boutique-logo"></a></li>
-                    <li><a href="{{ path('console_modele_list') }}">Modèles de console</a></li>
+                    {#<li><a href="{{ path('console_modele_list') }}">Modèles de console</a></li>#}
                     {% if app.user %}
+                        <li><a href="{{ path('profil') }}">Profil</a></li>
                         <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
                     {% else %}
+                        <li><a href="{{ path('register') }}">S'inscrire</a></li>
                         <li><a href="{{ path('login') }}">Se connecter</a></li>
                     {% endif %}
                     <li><a href="{{ path('panier') }}">Panier</a></li>

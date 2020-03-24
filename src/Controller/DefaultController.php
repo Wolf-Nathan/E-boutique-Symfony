@@ -19,4 +19,8 @@ class DefaultController extends AbstractController{
             'marques' => $marqueRepository->findAll()
         ]);
     }
+
+    public function profile(){
+        return $this->render('user/profil.html.twig');
+    }
 }

@@ -17,6 +17,11 @@ login:
     path: /login
 logout:
     path: /logout
+register:
+    path: /register
 panier:
     path: /panier
     controller: App\Controller\PanierController::index
+profil:
+    path: /profil
+    controller: App\Controller\DefaultController::profile

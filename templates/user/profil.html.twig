@@ -9,7 +9,7 @@
         <p>Prenom : {{ app.user.prenom }}</p>
         <p>Adresse mail : {{ app.user.email }}</p>
         {% if app.user.telephone %}
-            <p>Numéro de téléphone : {{ app.user.telephone }}</p>
+            <p>Numéro de téléphone : {{ phoneNumber(app.user.telephone) }}</p>
         {% endif %}
     {% else %}
         <h1>Merci de vous <a href="{{ path('login') }}">connecter</a> ou de vous <a href="{{ path('register') }}">inscrire !</a></h1>

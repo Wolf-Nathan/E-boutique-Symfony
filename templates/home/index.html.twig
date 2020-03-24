@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Accueil{% endblock %}
+
 {% block body %}
     <h1>Bienvenue sur notre boutique !</h1>
     {% if is_granted('ROLE_ADMIN') %}
         <h3>Vous êtes connecté en tant qu'administrateur.</h3>
     {% endif %}
     {% if app.user %}
-        <h5>Bonjour {{ app.user.username }}</h5>
+        <h5>Bonjour {{ app.user.prenom }} {{ app.user.nom }}</h5>
     {% endif %}
     <ul>
         <li>

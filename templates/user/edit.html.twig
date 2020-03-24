@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if app.user %}
+        {% if app.user.id == user.id %}
+            <h1>{{ app.user.id }}</h1>
+        {% endif %}
+    {% else %}
+        <h1>Merci de vous <a href="{{ path('login') }}">connecter</a> ou de vous <a href="{{ path('register') }}">inscrire !</a></h1>
+    {% endif %}
+{% endblock %}

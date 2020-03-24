@@ -11,6 +11,7 @@
         {% if app.user.telephone %}
             <p>Numéro de téléphone : {{ phoneNumber(app.user.telephone) }}</p>
         {% endif %}
+        <a class="modif-profil ml-4" href="{{ path('user_edit', {id: app.user.id})  }}">Modifier le profil</a>
     {% else %}
         <h1>Merci de vous <a href="{{ path('login') }}">connecter</a> ou de vous <a href="{{ path('register') }}">inscrire !</a></h1>
     {% endif %}

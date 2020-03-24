@@ -101,3 +101,16 @@ footer{
     width: 100px;
     height: 100px;
 }
+
+/* profil */
+.modif-profil {
+    border: solid 3px blue;
+    background-color : blue;
+    color: white;
+    padding: 5px;
+}
+
+.modif-profil:hover {
+    text-decoration: none;
+    color: white;
+}

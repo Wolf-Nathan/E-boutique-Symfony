@@ -4,7 +4,7 @@
 
 {% block body %}
     {% if app.user %}
-        <h2> Votre panier {{ app.user.username }}</h2>
+        <h2> Votre panier {{ app.user.prenom }} {{ app.user.nom }}</h2>
     {% else %}
         <h2>Votre panier</h2>
     {% endif %}

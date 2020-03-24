@@ -3,59 +3,38 @@
 {% block title %}Jeux index{% endblock %}
 
 {% block body %}
-    <h1>Jeux index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Age recommandé</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Consoles</th>
-                <th>Marque</th>
-                <th>Date de sortie</th>
-                <th>Boite</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for jeu in jeux %}
-            <tr>
-                <td>{{ jeu.id }}</td>
-                <td>{{ jeu.nom }}</td>
-                <td>{{ jeu.ageMini }}</td>
-                <td>{{ jeu.description }}</td>
-                <td>{{ jeu.prix }}€</td>
-                <td>
-                    {%  for key, console in jeu.console %}
-                        {% if key > 0 %}
-                         ,
-                        {% endif %}
-                        {{ console }}
-                    {% endfor %}
-                </td>
-                <td>{{ jeu.marque }}</td>
-                <td>{{ jeu.dateSortie ? jeu.dateSortie|date('d-m-Y') : '' }}</td>
-                <td>
-                    {% if getLength(jeu.media) > 0 %}
-                        <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="Jaquette"></td>
-                    {% else %}
-                        Aucune image trouvée
-                    {% endif %}
-                <td>
-                    <a href="{{ path('jeux_show', {'id': jeu.id}) }}">Voir</a>
-                    <a href="{{ path('jeux_edit', {'id': jeu.id}) }}">Editer</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">Aucun jeu trouvé !</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h1>Nos jeux</h1>
 
     <a href="{{ path('jeux_new') }}">Ajouter un jeu</a>
+
+    <div class="container">
+        <div class="row">
+        {% for jeu in jeux %}
+            <div class="col-4  mb-2 jeux-liste">
+                <a href="{{ path('jeux_show', {id: jeu.id}) }}">
+                    <p>{{ jeu.nom }}</p>
+                    {% if getLength(jeu.media) > 0 %}
+                        <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="Jaquette {{ jeu.nom }}">
+                    {% else %}
+                        <span>Pas de visuel disponible</span>
+                    {% endif %}
+                    <p>{{ jeu.prix }}€<p>
+                    <p>
+                        Disponible sur :
+                        {% for key, console in jeu.console %}
+                            {% if key > 0 %}
+                            ,
+                            {% endif %}
+                            {{ console }}
+                        {% endfor %}
+                    </p>
+                    <p> Age recommandé : {{ jeu.ageMini }} ans et +</p>
+                </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('jeux_edit', {id: jeu.id}) }}">Editer</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
 {% endblock %}

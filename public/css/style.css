@@ -88,6 +88,14 @@ footer{
     padding: 5px;
 }
 
+.jeux-liste {
+    text-align: center;
+}
+
+.jeux-liste a:hover {
+    text-decoration : none;
+}
+
 /* media */
 .img-media-list{
     width: 100px;

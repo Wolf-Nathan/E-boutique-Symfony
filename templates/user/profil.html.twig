@@ -5,38 +5,43 @@
 {% block body %}
     {% if app.user %}
         <h1>Profil</h1>
-        <div class="container">
-            <p>Nom : {{ app.user.nom }}</p>
-            <p>Prenom : {{ app.user.prenom }}</p>
-            <p>Adresse mail : {{ app.user.email }}</p>
-            {% if app.user.telephone %}
-                <p>Numéro de téléphone : {{ phoneNumber(app.user.telephone) }}</p>
-            {% endif %}
+        <div class="ml-4 mb-4">
+            <h3>Votre profil</h3>
+            <div class="container">
+                <p>Nom : {{ app.user.nom }}</p>
+                <p>Prenom : {{ app.user.prenom }}</p>
+                <p>Adresse mail : {{ app.user.email }}</p>
+                {% if app.user.telephone %}
+                    <p>Numéro de téléphone : {{ phoneNumber(app.user.telephone) }}</p>
+                {% endif %}
+            </div>
             <a class="modif-profil ml-4" href="{{ path('user_edit', {id: app.user.id})  }}">Modifier le profil</a>
         </div>
-        <h3>Vos adresses</h3>
-        <div class="container">
-            {% if adresses %}
-                <div class="row">
-                    {% for adresse in adresses %}
-                        <div>
-                            <p>Nom : {{ adresse.nom }}</p>
-                            <p>Prénom : {{ adresse.prenom }}</p>
-                            {% if adresse.telephone %}
-                                <p>Téléphone : {{ phoneNumber(adresse.telephone) }}</p>
-                            {% endif %}
-                            <p>Voie : {{ adresse.voie }}</p>
-                            <p>Code postal : {{ adresse.codePostal }}</p>
-                            <p>Ville :  {{ adresse.ville }}</p>
-                            <p>Pays : {{ adresse.pays }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <h5>Vous n'avez aucune adresse de renseignée.</h5>
-            {% endif %}
+        <div class="ml-4">
+            <h3>Vos adresses</h3>
+            <div class="container">
+                {% if adresses %}
+                    <div class="row">
+                        {% for adresse in adresses %}
+                            <div class="adresse-bloc mr-2 mb-4 col-5">
+                                <span class="col-6">Nom : {{ adresse.nom }}</span>
+                                <span class="col-6">Prénom : {{ adresse.prenom }}</span>
+                                {% if adresse.telephone %}
+                                    <p  class="col-12">Téléphone : {{ phoneNumber(adresse.telephone) }}</p>
+                                {% endif %}
+                                <p class="ml-3">Voie : {{ adresse.voie }}</p>
+                                <p class="ml-3">Code postal : {{ adresse.codePostal }}</p>
+                                <p class="ml-3">Ville :  {{ adresse.ville }}</p>
+                                <p class="ml-3">Pays : {{ adresse.pays }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <h5>Vous n'avez aucune adresse de renseignée.</h5>
+                {% endif %}
+            </div>
+            <a class="modif-profil ml-4" href="{{ path('add_address', {id: app.user.id})  }}">Ajouter une adresse</a>
         </div>
-        <a class="modif-profil ml-4" href="{{ path('add_address', {id: app.user.id})  }}">Ajouter une adresse</a>
     {% else %}
         <h1>Merci de vous <a href="{{ path('login') }}">connecter</a> ou de vous <a href="{{ path('register') }}">inscrire !</a></h1>
     {% endif %}

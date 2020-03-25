@@ -120,3 +120,20 @@ footer{
     padding: 4px;
     background-color: darkgrey;
 }
+
+.adresse-bloc a {
+    /*border: solid 3px red;
+    background-color: red;
+    color : white;
+    padding: 5px;
+    margin-bottom: 5px;*/
+    color: red;
+}
+
+.adresse-bloc a:hover {
+    text-decoration: none;
+}
+
+.adresse-bloc .btn {
+    color: red;
+}

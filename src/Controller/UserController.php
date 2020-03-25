@@ -92,4 +92,46 @@ class UserController extends AbstractController{
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/{id}", name="adresse_delete", methods={"DELETE"})
+     */
+    public function deleteAddress(Request $request, Adresse $adresse): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$adresse->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($adresse);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('profil');
+    }
+
+    /**
+     * @Route("/{id}/edit-address", name="address_edit", methods={"GET","POST"})
+     */
+    public function editAddress(Request $request, Adresse $adresse): Response
+    {
+        $form = $this->createFormBuilder($adresse)
+            ->add('nom', TextType::class)
+            ->add('prenom', TextType::class)
+            ->add('telephone', TextType::class)
+            ->add('voie', TextType::class)
+            ->add('codePostal', TextType::class)
+            ->add('ville', TextType::class)
+            ->add('pays', TextType::class)
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('profil');
+        }
+
+        return $this->render('user/editAddress.html.twig', [
+            'adresse' => $adresse,
+            'form' => $form->createView()
+        ]);
+    }
 }

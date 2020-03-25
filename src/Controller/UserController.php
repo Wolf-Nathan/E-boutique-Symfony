@@ -14,6 +14,10 @@ use App\Entity\User;
 
 class UserController extends AbstractController{
 
+    public function profile(){
+        return $this->render('user/profil.html.twig');
+    }
+
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */

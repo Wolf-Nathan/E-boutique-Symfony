@@ -24,4 +24,4 @@ panier:
     controller: App\Controller\PanierController::index
 profil:
     path: /profil
-    controller: App\Controller\DefaultController::profile
+    controller: App\Controller\UserController::profile

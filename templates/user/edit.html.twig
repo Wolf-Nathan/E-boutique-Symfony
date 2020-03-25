@@ -1,9 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Modifier le profil{% endblock %}
+
 {% block body %}
     {% if app.user %}
         {% if app.user.id == user.id %}
-            <h1>{{ app.user.id }}</h1>
+            <h1>Modifier le profil</h1>
+            <div class="container">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn modif-profil ml-4">{{ button_label|default('Valider les modifications') }}</button>
+            {{ form_end(form) }}
+            </div>
         {% endif %}
     {% else %}
         <h1>Merci de vous <a href="{{ path('login') }}">connecter</a> ou de vous <a href="{{ path('register') }}">inscrire !</a></h1>

@@ -14,6 +14,29 @@
             {% endif %}
             <a class="modif-profil ml-4" href="{{ path('user_edit', {id: app.user.id})  }}">Modifier le profil</a>
         </div>
+        <h3>Vos adresses</h3>
+        <div class="container">
+            {% if adresses %}
+                <div class="row">
+                    {% for adresse in adresses %}
+                        <div>
+                            <p>Nom : {{ adresse.nom }}</p>
+                            <p>Prénom : {{ adresse.prenom }}</p>
+                            {% if adresse.telephone %}
+                                <p>Téléphone : {{ phoneNumber(adresse.telephone) }}</p>
+                            {% endif %}
+                            <p>Voie : {{ adresse.voie }}</p>
+                            <p>Code postal : {{ adresse.codePostal }}</p>
+                            <p>Ville :  {{ adresse.ville }}</p>
+                            <p>Pays : {{ adresse.pays }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h5>Vous n'avez aucune adresse de renseignée.</h5>
+            {% endif %}
+        </div>
+        <a class="modif-profil ml-4" href="{{ path('add_address', {id: app.user.id})  }}">Ajouter une adresse</a>
     {% else %}
         <h1>Merci de vous <a href="{{ path('login') }}">connecter</a> ou de vous <a href="{{ path('register') }}">inscrire !</a></h1>
     {% endif %}

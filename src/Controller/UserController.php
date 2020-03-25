@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Adresse;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -15,7 +16,15 @@ use App\Entity\User;
 class UserController extends AbstractController{
 
     public function profile(){
-        return $this->render('user/profil.html.twig');
+        $security = $this->container->get('security.token_storage');
+        $token = $security->getToken();
+        if($token){
+            /** @var \App\Entity\User $user */
+            $user = $token->getUser();
+        }
+        return $this->render('user/profil.html.twig', [
+            'adresses' => $user->getAdresses()
+        ]);
     }
 
     /**
@@ -41,7 +50,46 @@ class UserController extends AbstractController{
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
-            'form' => $form->createView(),
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addAddress", name="add_address", methods={"GET", "POST"})
+     */
+    public function addAddress(Request $request, User $user): Response
+    {
+        $adresse = new Adresse();
+        $form = $this->createFormBuilder($adresse)
+            ->add('nom', TextType::class)
+            ->add('prenom', Texttype::class)
+            ->add('telephone', Texttype::class)
+            ->add('voie', TextType::class)
+            ->add('codePostal', TextType::class)
+            ->add('ville', TextType::class)
+            ->add('pays', TextType::class)
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $adresse->setNom($form->get('nom')->getData());
+            $adresse->setPrenom($form->get('prenom')->getData());
+            $adresse->setTelephone($form->get('telephone')->getData());
+            $adresse->setVoie($form->get('voie')->getData());
+            $adresse->setCodePostal($form->get('codePostal')->getData());
+            $adresse->setVille($form->get('ville')->getData());
+            $adresse->setPays($form->get('pays')->getData());
+            $adresse->setUser($user);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($adresse);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('profil');
+        }
+
+        return $this->render('user/addAddress.html.twig', [
+            'user' => $user,
+            'form' => $form->createView()
         ]);
     }
 }

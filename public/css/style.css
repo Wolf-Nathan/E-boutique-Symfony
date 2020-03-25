@@ -154,3 +154,10 @@ footer{
 .adresse-bloc .btn {
     color: red;
 }
+
+/* cart */
+
+.cart-icon{
+    height : 20px;
+    width : 20px;
+}

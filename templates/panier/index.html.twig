@@ -10,23 +10,40 @@
     {% endif %}
     {% if totalArticles > 0 %}
         {% if totalConsole > 0 %}
-            {% for console in consoles %}
-                <p>{{ console.nom }}</p>
-                <p>{{ console.prix }}</p>
-            {% endfor %}
-            <p>Nombre de consoles dans le panier : {{ totalConsole }}</p>
-            <p>Prix : {{ totalPrixConsole }}</p>
+            <div class="container">
+                <div class="row">
+                    {% for console in consoles %}
+                        <p>{{ console.nom }}</p>
+                        <p>{{ console.prix }}</p>
+                    {% endfor %}
+                    <p>Nombre de consoles dans le panier : {{ totalConsole }}</p>
+                    <p>Prix : {{ totalPrixConsole }}</p>
+                </div>
+            </div>
         {% endif %}
         {% if totalJeux > 0 %}
-            {% for jeu in jeux %}
-                <p>{{ jeu.nom }}</p>
-                <p>Prix : {{ jeu.prix }}</p>
-            {% endfor %}
-            <p>Nombre de jeux dans le panier : {{ totalJeux }}</p>
-            <p>Prix : {{ totalPrixJeux }}</p>
+            <div class="container">
+                <div class="col">
+                    {% for jeu in jeux %}
+                        <div class=" md-12 mb-2">
+                            <span>{{ jeu.nom }}</span>
+                            <span>Prix à l'unité : {{ jeu.prix }}€</span>
+                            <span>Quantité : {{ jeuxQuantity[jeu.id] }}</span>
+                            <a href="{{ path('jeux_panier_add', {'id': jeu.id}) }}">
+                                <img class="cart-icon" src="{{ asset('images/plus.png') }}" alt="Ajouter"/>
+                            </a>
+                            <a href="{{ path('jeux_panier_delete', {'id': jeu.id}) }}">
+                                <img class="cart-icon" src="{{ asset('images/moins.png') }}" alt="Supprimer"/>
+                            </a>
+                        </div>
+                    {% endfor %}
+                    <span>Nombre de jeux dans le panier : {{ totalJeux }}</span>
+                    <span>Prix : {{ totalPrixJeux }}€</span>
+                </div>
+            </div>
         {% endif %}
         <p>Nombre total d'articles dans le panier : {{ totalArticles }}</p>
-        <p>Coût total du panier : {{ totalPrix }}</p>
+        <p>Coût total du panier : {{ totalPrix }}€</p>
 
         <a href="">Valider le panier</a>
 

@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Jeux;
+use App\Entity\ConsoleModele;
 
 class PanierController extends AbstractController
 {
@@ -20,12 +22,14 @@ class PanierController extends AbstractController
         $session = $request->getSession();
         /** @var \App\Entity\Jeux[] $jeux */
         $jeux = $session->get('jeux');
+        $jeuxQuantity = $session->get('jeuxQuantity');
         $totalJeux = 0;
         $totalPrixJeux = 0;
         if($jeux) {
             foreach ($jeux as $jeu) {
-                $totalJeux++;
-                $totalPrixJeux = $totalPrixJeux + $jeu->getPrix();
+                $totalJeux = $totalJeux + $jeuxQuantity[$jeu->getId()];
+                $prix = $jeu->getPrix() * $jeuxQuantity[$jeu->getId()];
+                $totalPrixJeux = $totalPrixJeux + $prix;
             }
         }
 
@@ -51,7 +55,67 @@ class PanierController extends AbstractController
             'totalPrixJeux' => $totalPrixJeux,
             'totalPrixConsole' => $totalPrixConsole,
             'totalArticles' => $totalArticles,
-            'totalPrix' => $totalPrix
+            'totalPrix' => $totalPrix,
+            'jeuxQuantity' => $jeuxQuantity
         ]);
+    }
+
+    /**
+     * @Route("/{id}/jeux-en-moins", name="jeux_panier_delete", methods={"GET", "POST"})
+     */
+    public function removeGame(Request $request, Jeux $jeux){
+        $jeuId = $jeux->getId();
+        $session = $request->getSession();
+        /** @var \App\Entity\Jeux[] $jeuxInCart */
+        $jeuxInCart = $session->get('jeux');
+        $jeuxQuantity = $session->get('jeuxQuantity');
+        if(is_array($jeuxInCart)) {
+            if(isset($jeuxInCart[$jeuId])) {
+                $jeuxQuantity[$jeuId]--;
+                if (!$jeuxQuantity[$jeuId]) {
+                    unset($jeuxInCart[$jeuId]);
+                    unset($jeuxQuantity[$jeuId]);
+                }
+            }
+        }
+        $session->set('jeux', $jeuxInCart);
+        $session->set('jeuxQuantity', $jeuxQuantity);
+        $session->save();
+        return $this->index($request);
+    }
+
+    /**
+     * @Route("/{id}/jeux-en-plus", name="jeux_panier_add", methods={"GET", "POST"})
+     */
+    public function addGame(Request $request, Jeux $jeux){
+        $jeuId = $jeux->getId();
+        $session = $request->getSession();
+        if(!$session->isStarted()){
+            $session->start();
+        }
+        $jeuxSession = $session->get('jeux');
+        $jeuxQuantity = $session->get('jeuxQuantity');
+        if($jeuxSession){
+            if(isset($jeuxQuantity[$jeuId])) {
+                $jeuxQuantity[$jeuId]++;
+            }
+            else {
+                $jeuxSession[$jeuId] = $jeux;
+                $jeuxQuantity[$jeuId] = 1;
+            }
+        }
+        else {
+            $jeuxSession = array(
+                $jeuId => $jeux
+            );
+            $jeuxQuantity = array(
+                $jeuId => 1
+            );
+
+        }
+        $session->set('jeux', $jeuxSession);
+        $session->set('jeuxQuantity', $jeuxQuantity);
+        $session->save();
+        return $this->index($request);
     }
 }

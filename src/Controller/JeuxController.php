@@ -100,20 +100,33 @@ class JeuxController extends AbstractController
      * @Route("/{id}/panier", name="jeux_panier", methods={"GET", "POST"})
      */
     public function addToCart(Request $request, Jeux $jeux){
+        $jeuId = $jeux->getId();
         $session = $request->getSession();
         if(!$session->isStarted()){
             $session->start();
         }
         $jeuxSession = $session->get('jeux');
+        $jeuxQuantity = $session->get('jeuxQuantity');
         if($jeuxSession){
-            $jeuxSession[] = $jeux;
+            if(isset($jeuxQuantity[$jeuId])) {
+                $jeuxQuantity[$jeuId]++;
+            }
+            else {
+                $jeuxSession[$jeuId] = $jeux;
+                $jeuxQuantity[$jeuId] = 1;
+            }
         }
         else {
             $jeuxSession = array(
-                0 => $jeux
+                $jeuId => $jeux
             );
+            $jeuxQuantity = array(
+                $jeuId => 1
+            );
+
         }
         $session->set('jeux', $jeuxSession);
+        $session->set('jeuxQuantity', $jeuxQuantity);
         $session->save();
         return $this->render('jeux/show.html.twig', [
             'jeux' => $jeux,

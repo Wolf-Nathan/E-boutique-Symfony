@@ -63,6 +63,18 @@ body h1 {
     text-align: center;
 }
 
+.home-link-btn {
+    color: white;
+    border: solid darkgrey 5px;
+    background-color: darkgrey;
+    padding: 5px;
+}
+
+.home-link-btn:hover {
+    color: white;
+    text-decoration: none;
+}
+
 /* footer */
 footer{
     background-color : royalblue;

@@ -25,19 +25,26 @@
         </li>
     </ul>
     <div class="ml-3">
-        <h3>Nos jeux</h3>
-        <div class="ml-3">
-            <button> < </button>
-            {% for jeu in jeux %}
-                <a class="ml-3" href="{{ path('jeux_show', {'id': jeu.id}) }}">
-                    {% if getLength(jeu.media) %}
-                        <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="{{ jeu.nom }}">
-                    {% else %}
-                        {{ jeu.nom }}
-                    {% endif %}
-                </a>
-            {% endfor %}
-            <button class="ml-3"> > </button>
+        <h3>Nos derniers jeux</h3>
+        <div class="ml-3 mt-3 container md-12">
+            <div class="row">
+                {#<button> < </button>#}
+                {% for jeu in jeux %}
+                    <a class="ml-3" href="{{ path('jeux_show', {'id': jeu.id}) }}">
+                        <div>
+                        {% if getLength(jeu.media) %}
+                            <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="{{ jeu.nom }}">
+                        {% else %}
+                            {{ jeu.nom }}
+                        {% endif %}
+                        </div>
+                    </a>
+                {% endfor %}
+                {#<button class="ml-3"> > </button>#}
+            </div>
+        </div>
+        <div class="mt-5 mb-5">
+            <a class="home-link-btn" href="{{ path('jeux_list') }}">Voir tout nos jeux</a>
         </div>
     </div>
     <div class="ml-3">

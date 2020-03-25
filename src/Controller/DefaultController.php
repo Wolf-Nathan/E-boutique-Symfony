@@ -13,9 +13,17 @@ class DefaultController extends AbstractController{
 
     public function index(JeuxRepository $jeuxRepository, MarqueRepository $marqueRepository){
 
+        $jeux = $jeuxRepository->findAll();
+        $derniersJeux = [];
+        for($i = 1; $i<6; $i++){
+            var_dump($i);
+            if(isset($jeux[ sizeof($jeux) - $i ])) {
+                $derniersJeux[] = $jeux[sizeof($jeux) - $i ];
+            }
+        }
         return $this->render('home/index.html.twig', [
             'title' => 'Accueil',
-            'jeux' => $jeuxRepository->findAll(),
+            'jeux' => $derniersJeux,
             'marques' => $marqueRepository->findAll()
         ]);
     }

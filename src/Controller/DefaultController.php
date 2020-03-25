@@ -16,7 +16,6 @@ class DefaultController extends AbstractController{
         $jeux = $jeuxRepository->findAll();
         $derniersJeux = [];
         for($i = 1; $i<6; $i++){
-            var_dump($i);
             if(isset($jeux[ sizeof($jeux) - $i ])) {
                 $derniersJeux[] = $jeux[sizeof($jeux) - $i ];
             }

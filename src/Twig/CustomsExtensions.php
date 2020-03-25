@@ -25,10 +25,13 @@ class CustomsExtensions extends AbstractExtension {
     }
 
     public function phoneNumber(string $phoneNumber){
-        return $phoneNumber[0] . $phoneNumber[1] . ' ' .
-               $phoneNumber[2] . $phoneNumber[3] . ' ' .
-               $phoneNumber[4] . $phoneNumber[5] . ' ' .
-               $phoneNumber[6] . $phoneNumber[7] . ' ' .
-               $phoneNumber[8] . $phoneNumber[9];
+        if(strlen($phoneNumber) === 10 ) {
+            return $phoneNumber[0] . $phoneNumber[1] . ' ' .
+                $phoneNumber[2] . $phoneNumber[3] . ' ' .
+                $phoneNumber[4] . $phoneNumber[5] . ' ' .
+                $phoneNumber[6] . $phoneNumber[7] . ' ' .
+                $phoneNumber[8] . $phoneNumber[9];
+        }
+        return $phoneNumber;
     }
 }

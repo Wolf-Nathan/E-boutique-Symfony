@@ -14,6 +14,9 @@
     <div class="jumbotron">
         <div class="container">
             <nav class="menu mb-4">
+                {% if app.user %}
+                    <span class="pseudo">Bonjour {{ app.user.prenom }} {{ app.user.nom }}</span>
+                {% endif %}
                 <ul class="list-unstyled row pl-0">
                     <li><a href="{{ path('jeux_list') }}">Jeux</a></li>
                     <li><a href="{{ path('console_list') }}">Consoles</a></li>

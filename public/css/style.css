@@ -49,6 +49,11 @@ body {
     position: relative;
 }
 
+.pseudo{
+    font-size: 10px;
+    position: relative;
+}
+
 /* body */
 body {
     background-color : lightgrey;

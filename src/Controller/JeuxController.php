@@ -58,6 +58,7 @@ class JeuxController extends AbstractController
         }
         return $this->render('jeux/show.html.twig', [
             'jeux' => $jeux,
+            'ajout' => false
         ]);
     }
 
@@ -115,7 +116,8 @@ class JeuxController extends AbstractController
         $session->set('jeux', $jeuxSession);
         $session->save();
         return $this->render('jeux/show.html.twig', [
-            'jeux' => $jeux
+            'jeux' => $jeux,
+            'ajout' => true
         ]);
     }
 }

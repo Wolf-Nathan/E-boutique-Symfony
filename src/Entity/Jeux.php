@@ -59,10 +59,16 @@ class Jeux
      */
     private $media;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandeLine", mappedBy="jeu")
+     */
+    private $commandeLines;
+
     public function __construct()
     {
         $this->console = new ArrayCollection();
         $this->media = new ArrayCollection();
+        $this->commandeLines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +204,37 @@ class Jeux
             // set the owning side to null (unless already changed)
             if ($medium->getJeux() === $this) {
                 $medium->setJeux(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandeLine[]
+     */
+    public function getCommandeLines(): Collection
+    {
+        return $this->commandeLines;
+    }
+
+    public function addCommandeLine(CommandeLine $commandeLine): self
+    {
+        if (!$this->commandeLines->contains($commandeLine)) {
+            $this->commandeLines[] = $commandeLine;
+            $commandeLine->setJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeLine(CommandeLine $commandeLine): self
+    {
+        if ($this->commandeLines->contains($commandeLine)) {
+            $this->commandeLines->removeElement($commandeLine);
+            // set the owning side to null (unless already changed)
+            if ($commandeLine->getJeu() === $this) {
+                $commandeLine->setJeu(null);
             }
         }
 

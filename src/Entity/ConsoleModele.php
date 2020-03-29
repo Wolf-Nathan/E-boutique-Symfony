@@ -44,9 +44,15 @@ class ConsoleModele
      */
     private $media;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandeLine", mappedBy="console")
+     */
+    private $commandeLines;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
+        $this->commandeLines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,6 +142,37 @@ class ConsoleModele
             // set the owning side to null (unless already changed)
             if ($medium->getConsoleModele() === $this) {
                 $medium->setConsoleModele(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandeLine[]
+     */
+    public function getCommandeLines(): Collection
+    {
+        return $this->commandeLines;
+    }
+
+    public function addCommandeLine(CommandeLine $commandeLine): self
+    {
+        if (!$this->commandeLines->contains($commandeLine)) {
+            $this->commandeLines[] = $commandeLine;
+            $commandeLine->setConsole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeLine(CommandeLine $commandeLine): self
+    {
+        if ($this->commandeLines->contains($commandeLine)) {
+            $this->commandeLines->removeElement($commandeLine);
+            // set the owning side to null (unless already changed)
+            if ($commandeLine->getConsole() === $this) {
+                $commandeLine->setConsole(null);
             }
         }
 

@@ -45,7 +45,16 @@
         <p>Nombre total d'articles dans le panier : {{ totalArticles }}</p>
         <p>Coût total du panier : {{ totalPrix }}€</p>
 
-        <a href="">Valider le panier</a>
+        {% if app.user %}
+            <a href="">Valider le panier</a>
+        {% else %}
+            <span>
+                <a href="{{ path('login') }}">Connectez-vous</a>
+                 ou
+                <a href="{{ path('register') }}">créez un compte</a>
+                 pour pouvoir valider votre panier.
+            </span>
+        {% endif %}
 
     {% else %}
         <h1>Votre panier est vide !</h1>

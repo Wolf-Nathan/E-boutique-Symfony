@@ -44,7 +44,7 @@
             </div>
             <a class="modif-profil ml-4" href="{{ path('add_address', {id: app.user.id})  }}">Ajouter une adresse</a>
         </div>
-        <div class="ml-4">
+        <div class="ml-4 mt-4">
             <h3>Vos commandes</h3>
             <div class="container">
                 {% if commandes %}
@@ -75,6 +75,8 @@
                             </div>
                         {% endfor %}
                     </div>
+                {% else %}
+                    <h5>Vous n'avez passé aucune commande.</h5>
                 {% endif %}
             </div>
         </div>

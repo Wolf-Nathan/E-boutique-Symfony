@@ -5,14 +5,17 @@
 {% block body %}
     <h1 class="mb-4">{{ jeux.nom }}</h1>
 
+    {% if ajout %}
+        <h5 class="ml-3">L'article a bien été ajouté au panier</h5>
+    {% endif %}
+
     <div class="mb-4">
         {% if getLength(jeux.media) > 0 %}
             <img class="visuel_central" src="{{ jeux.media[0] }}" alt="{{ jeux.nom }}"/>
         {% endif %}
-        <a class="addToCart" href="{{ path('jeux_panier', {'id': jeux.id}) }}">Ajouter au panier</a>
-        {% if ajout %}
-            <p>L'article a bien été ajouté au panier</p>
-        {% endif %}
+        <div class="ml-4">
+            <a class="addToCart" href="{{ path('jeux_panier', {'id': jeux.id}) }}">Ajouter au panier</a>
+        </div>
     </div>
 
 
@@ -42,7 +45,7 @@
                 <td>{{ jeux.marque }}</td>
             </tr>
             <tr>
-                <th>AgeMini</th>
+                <th>Age recommandé</th>
                 <td>{{ jeux.ageMini }}</td>
             </tr>
             <tr>
@@ -62,7 +65,9 @@
 
     <a href="{{ path('jeux_index') }}">Liste des jeux</a>
 
-    <a href="{{ path('jeux_edit', {'id': jeux.id}) }}">Editer le jeu</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('jeux_edit', {'id': jeux.id}) }}">Editer le jeu</a>
 
-    {{ include('jeux/_delete_form.html.twig') }}
+        {{ include('jeux/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

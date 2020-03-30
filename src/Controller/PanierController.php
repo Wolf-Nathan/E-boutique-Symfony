@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Console;
 use App\Repository\JeuxRepository;
 use App\Repository\MarqueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +39,7 @@ class PanierController extends AbstractController
 
         /** @var \App\Entity\ConsoleModele[] $consoles */
         $consoles = $session->get('consoles');
+        $consolesQuantity = $session->get('consolesQuantity');
         $totalConsole = 0;
         $totalPrixConsole = 0;
         if($consoles) {
@@ -59,7 +61,8 @@ class PanierController extends AbstractController
             'totalPrixConsole' => $totalPrixConsole,
             'totalArticles' => $totalArticles,
             'totalPrix' => $totalPrix,
-            'jeuxQuantity' => $jeuxQuantity
+            'jeuxQuantity' => $jeuxQuantity,
+            'consolesQuantity' => $consolesQuantity,
         ]);
     }
 
@@ -214,5 +217,64 @@ class PanierController extends AbstractController
             'commande' => null,
             'commandeId' => null
         ]);
+    }
+
+    /**
+     * @Route("/{id}/console-en-moins", name="console_panier_delete", methods={"GET", "POST"})
+     */
+    public function removeConsole(Request $request, ConsoleModele $consoleModele){
+        $consoleModeleId = $consoleModele->getId();
+        $session = $request->getSession();
+        /** @var \App\Entity\Jeux[] $jeuxInCart */
+        $consolesInCart = $session->get('consoles');
+        $consolesQuantity = $session->get('consolesQuantity');
+        if(is_array($consolesInCart)) {
+            if(isset($consolesInCart[$consoleModeleId])) {
+                $consolesQuantity[$consoleModeleId]--;
+                if (!$consolesQuantity[$consoleModeleId]) {
+                    unset($consolesInCart[$consoleModeleId]);
+                    unset($consolesQuantity[$consoleModeleId]);
+                }
+            }
+        }
+        $session->set('consoles', $consolesInCart);
+        $session->set('consolesQuantity', $consolesQuantity);
+        $session->save();
+        return $this->index($request);
+    }
+
+    /**
+     * @Route("/{id}/console-en-plus", name="console_panier_add", methods={"GET", "POST"})
+     */
+    public function addConsole(Request $request, ConsoleModele $consoleModele){
+        $consoleModeleId = $consoleModele->getId();
+        $session = $request->getSession();
+        if(!$session->isStarted()){
+            $session->start();
+        }
+        $consolesSession = $session->get('consoles');
+        $consolesQuantity = $session->get('consolesQuantity');
+        if($consolesSession){
+            if(isset($consolesQuantity[$consoleModeleId])) {
+                $consolesQuantity[$consoleModeleId]++;
+            }
+            else {
+                $consolesSession[$consoleModeleId] = $consoleModele;
+                $consolesQuantity[$consoleModeleId] = 1;
+            }
+        }
+        else {
+            $consolesSession = array(
+                $consoleModeleId => $consoleModele
+            );
+            $jeuxQuantity = array(
+                $consoleModeleId => 1
+            );
+
+        }
+        $session->set('consoles', $consolesSession);
+        $session->set('consolesQuantity', $consolesQuantity);
+        $session->save();
+        return $this->index($request);
     }
 }

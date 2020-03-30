@@ -13,11 +13,20 @@
             <div class="container">
                 <div class="row">
                     {% for console in consoles %}
-                        <p>{{ console.nom }}</p>
-                        <p>{{ console.prix }}</p>
+                        <div class=" md-12 mb-2">
+                            <span>{{ console.nom }}</span>
+                            <span>Prix à l'unité : {{ console.prix }}€</span>
+                            <span>Quantité : {{ consolesQuantity[console.id] }}</span>
+                            <a href="{{ path('console_panier_add', {'id': console.id}) }}">
+                                <img class="cart-icon" src="{{ asset('images/plus.png') }}" alt="Ajouter"/>
+                            </a>
+                            <a href="{{ path('console_panier_delete', {'id': console.id}) }}">
+                                <img class="cart-icon" src="{{ asset('images/moins.png') }}" alt="Supprimer"/>
+                            </a>
+                        </div>
                     {% endfor %}
-                    <p>Nombre de consoles dans le panier : {{ totalConsole }}</p>
-                    <p>Prix : {{ totalPrixConsole }}</p>
+                    <span>Nombre de consoles dans le panier : {{ totalConsole }}</span>
+                    <span>Prix : {{ totalPrixConsole }}</span>
                 </div>
             </div>
         {% endif %}

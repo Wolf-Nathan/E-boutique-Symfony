@@ -55,6 +55,7 @@ class ConsoleModeleController extends AbstractController
     {
         return $this->render('console_modele/show.html.twig', [
             'console_modele' => $consoleModele,
+            'ajout' => false
         ]);
     }
 
@@ -90,5 +91,43 @@ class ConsoleModeleController extends AbstractController
         }
 
         return $this->redirectToRoute('console_modele_index');
+    }
+
+    /**
+     * @Route("/{id}/panier", name="console_panier", methods={"GET", "POST"})
+     */
+    public function addToCart(Request $request, ConsoleModele $consoleModele){
+        $consoleModeleId = $consoleModele->getId();
+        $session = $request->getSession();
+        if(!$session->isStarted()){
+            $session->start();
+        }
+        $consolesSession = $session->get('consoles');
+        $consolesQuantity = $session->get('consolesQuantity');
+        if($consolesSession){
+            if(isset($consolesQuantity[$consoleModeleId])) {
+                $consolesQuantity[$consoleModeleId]++;
+            }
+            else {
+                $consolesSession[$consoleModeleId] = $consoleModele;
+                $consolesQuantity[$consoleModeleId] = 1;
+            }
+        }
+        else {
+            $consolesSession = array(
+                $consoleModeleId => $consoleModele
+            );
+            $consolesQuantity = array(
+                $consoleModeleId => 1
+            );
+
+        }
+        $session->set('consoles', $consolesSession);
+        $session->set('consolesQuantity', $consolesQuantity);
+        $session->save();
+        return $this->render('console_modele/show.html.twig', [
+            'console_modele' => $consoleModele,
+            'ajout' => true
+        ]);
     }
 }

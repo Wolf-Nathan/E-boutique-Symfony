@@ -6,16 +6,16 @@
 
     <h1 class="mb-4">{{ console_modele.console }} {{ console_modele.nom }}</h1>
 
-{#{% if ajout %}
+    {% if ajout %}
         <h5 class="ml-3">L'article a bien été ajouté au panier</h5>
-    {% endif %}#}
+    {% endif %}
 
     <div class="mb-4">
         {% if getLength(console_modele.media) > 0 %}
             <img class="console_visuel_central" src="{{ console_modele.media[0] }}" alt="{{ console_modele.nom }}"/>
         {% endif %}
         <div class="ml-4">
-            <a class="addToCart" href="">Ajouter au panier</a>
+            <a class="addToCart" href="{{ path('console_panier', {id: console_modele.id}) }}">Ajouter au panier</a>
         </div>
     </div>
 

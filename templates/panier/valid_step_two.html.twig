@@ -6,6 +6,12 @@
     {% if app.user %}
         {% if commande %}
             <h1>Commande validée</h1>
+            <a href="{{ path('profil') }}">
+                <h3>Accéder à votre profil</h3>
+            </a>
+            <a href="{{ path('index') }}">
+                <h3>Retourner à l'accueil.</h3>
+            </a>
         {% else %}
             <h1>Une erreur s'est produite veuillez nous excuser</h1>
         {% endif %}

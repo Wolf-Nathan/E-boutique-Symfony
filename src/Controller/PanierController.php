@@ -148,63 +148,67 @@ class PanierController extends AbstractController
             /** @var \App\Entity\User $user */
             $user = $token->getUser();
 
-            // Creation de la commande.
-            $commande = new Commande();
-            $commande->setValid(true);
-            $commande->setDate(new \DateTime);
-            $commande->setUser($user);
-            $commande->setAdresse($adresse);
-
-            // Ajout de la commande en base.
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($commande);
-            $entityManager->flush();
-
             // Recuperation des articles pour creer les lignes de commandes.
             $session = $request->getSession();
             $jeux = $session->get('jeux');
             $jeuxQuantity = $session->get('jeuxQuantity');
-            if ($jeux) {
-                foreach ($jeux as $jeu) {
-                    if($jeu instanceof \App\Entity\Jeux) {
+            $consoles = $session->get('consoles');
+            $consolesQuantity = $session->get('consolesQuantity');
+            if($jeux || $consoles) {
+
+                // Creation de la commande.
+                $commande = new Commande();
+                $commande->setValid(true);
+                $commande->setDate(new \DateTime);
+                $commande->setUser($user);
+                $commande->setAdresse($adresse);
+
+                // Ajout de la commande en base.
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($commande);
+                $entityManager->flush();
+
+
+                if ($jeux) {
+                    foreach ($jeux as $jeu) {
+                        if ($jeu instanceof \App\Entity\Jeux) {
+                            $commandeLine = new CommandeLine();
+                            //$entityManager->persist($commandeLine);
+                            $commandeLine->setCommande($commande);
+                            $commandeLine->setJeu($jeu);
+                            //$quantite = $jeuxQuantity[$jeu->getId()];
+                            $commandeLine->setQuantite($jeuxQuantity[$jeu->getId()]);
+                            $commandeLine->setConsole(null);
+
+                            // Ajout de la ligne de commande en base.
+                            $entityManager->merge($commandeLine);
+                            $entityManager->flush();
+                        }
+                    }
+                    //$this->commandeLineJeux($jeux, $jeuxQuantity, $commande);
+                }
+                if ($consoles) {
+                    foreach ($consoles as $console) {
                         $commandeLine = new CommandeLine();
-                        //$entityManager->persist($commandeLine);
                         $commandeLine->setCommande($commande);
-                        $commandeLine->setJeu($jeu);
-                        //$quantite = $jeuxQuantity[$jeu->getId()];
-                        $commandeLine->setQuantite($jeuxQuantity[$jeu->getId()]);
-                        $commandeLine->setConsole(null);
+                        $commandeLine->setConsole($console);
+                        $commandeLine->setQuantite($consolesQuantity[$console->getId()]);
+                        $commandeLine->setJeu(null);
 
                         // Ajout de la ligne de commande en base.
                         $entityManager->merge($commandeLine);
                         $entityManager->flush();
                     }
                 }
-                //$this->commandeLineJeux($jeux, $jeuxQuantity, $commande);
+                $session->set('jeux', null);
+                $session->set('jeuxQuantity', null);
+                $session->set('consoles', null);
+                $session->set('consolesQuantity', null);
+                return $this->render('panier/valid_step_two.html.twig', [
+                    'commande' => $commande,
+                    'commandeId' => $commande->getId()
+                ]);
             }
-            $consoles = $session->get('consoles');
-            $consolesQuantity = $session->get('consolesQuantity');
-            if ($consoles) {
-                foreach ($consoles as $console) {
-                    $commandeLine = new CommandeLine();
-                    $commandeLine->setCommande($commande);
-                    $commandeLine->setConsole($console);
-                    $commandeLine->setQuantite($consolesQuantity[$console->getId()]);
-                    $commandeLine->setJeu(null);
-
-                    // Ajout de la ligne de commande en base.
-                    $entityManager->merge($commandeLine);
-                    $entityManager->flush();
-                }
-            }
-            $session->set('jeux', null);
-            $session->set('jeuxQuantity', null);
-            $session->set('consoles', null);
-            $session->set('consolesQuantity', null);
-            return $this->render('panier/valid_step_two.html.twig', [
-                'commande' => $commande,
-                'commandeId' =>$commande->getId()
-            ]);
         }
         return $this->render('panier/valid_step_two.html.twig', [
             'commande' => null,

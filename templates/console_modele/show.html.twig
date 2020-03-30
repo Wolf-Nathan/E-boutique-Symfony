@@ -1,34 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ConsoleModele{% endblock %}
+{% block title %}{{console_modele.console}} {{ console_modele.nom }}{% endblock %}
 
 {% block body %}
-    <h1>ConsoleModele</h1>
+
+    <h1 class="mb-4">{{ console_modele.console }} {{ console_modele.nom }}</h1>
+
+{#{% if ajout %}
+        <h5 class="ml-3">L'article a bien été ajouté au panier</h5>
+    {% endif %}#}
+
+    <div class="mb-4">
+        {% if getLength(console_modele.media) > 0 %}
+            <img class="console_visuel_central" src="{{ console_modele.media[0] }}" alt="{{ console_modele.nom }}"/>
+        {% endif %}
+        <div class="ml-4">
+            <a class="addToCart" href="">Ajouter au panier</a>
+        </div>
+    </div>
+
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ console_modele.id }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ console_modele.prix }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ console_modele.nom }}</td>
-            </tr>
-            <tr>
-                <th>DateSortie</th>
-                <td>{{ console_modele.dateSortie ? console_modele.dateSortie|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+        <tr>
+            <th>Console</th>
+            <td>{{ console_modele.console }}</td>
+        </tr>
+        <tr>
+            <th>Modèle</th>
+            <td>{{ console_modele.nom }}</td>
+        </tr>
+        <tr>
+            <th>Marque</th>
+            <td>{{ console_modele.marque }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ console_modele.prix }}€</td>
+        </tr>
+        <tr>
+            <th>Date de sortie</th>
+            <td>{{ console_modele.dateSortie ? console_modele.dateSortie|date('d/m/Y') : '' }}</td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('console_modele_index') }}">back to list</a>
+    <a href="{{ path('console_modele_index') }}">Liste des consoles</a>
 
-    <a href="{{ path('console_modele_edit', {'id': console_modele.id}) }}">edit</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('console_modele_edit', {'id': jeux.id}) }}">Editer le modèle</a>
 
-    {{ include('console_modele/_delete_form.html.twig') }}
+        {{ include('console_modele/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

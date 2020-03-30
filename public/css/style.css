@@ -113,6 +113,18 @@ footer{
     text-decoration : none;
 }
 
+/* console_modele */
+.console_liste {
+    width: 200px;
+    height: 140px;
+}
+
+.console_visuel_central {
+    margin-left: 370px;
+    width: 800px;
+    height: 600px;
+}
+
 /* media */
 .img-media-list{
     width: 100px;

@@ -1,26 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Marque{% endblock %}
+{% block title %}{{ marque.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Marque</h1>
+    <h1 class="mb-4">{{ marque.nom }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ marque.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ marque.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="mb-4">
+        {% if getLength(marque.media) > 0 %}
+            <img class="marque_visuel_central" src="{{ marque.media[0] }}" alt="{{ marque.nom }}"/>
+        {% endif %}
+    </div>
 
-    <a href="{{ path('marque_index') }}">back to list</a>
 
-    <a href="{{ path('marque_edit', {'id': marque.id}) }}">edit</a>
+    {% if getLength(marque.jeux) > 0 %}
+        <div class="ml-4">
+            <h3>Les jeux {{ marque.nom }}</h3>
+            <div class="container">
+                <div class="row">
+                    {% for jeu in marque.jeux %}
+                        <a class="ml-3" href="{{ path('jeux_show', {'id': jeu.id}) }}">
+                            <div>
+                                {% if getLength(jeu.media) %}
+                                    <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="{{ jeu.nom }}">
+                                {% else %}
+                                    {{ jeu.nom }}
+                                {% endif %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
-    {{ include('marque/_delete_form.html.twig') }}
+    {% if getLength(marque.consoles) > 0 %}
+        <div class="ml-4">
+            <h3>Les consoles {{ marque.nom }}</h3>
+            <div class="container">
+                <div class="row">
+                    {% for console in marque.consoles %}
+                        <a class="ml-3" href="{{ path('console_show', {'id': console.id}) }}">
+                            <div>
+                                {% if getLength(console.media) %}
+                                    <img class="jaquette_liste" src="{{ console.media[0] }}" alt="{{ console.nom }}">
+                                {% else %}
+                                    {{ console.nom }}
+                                {% endif %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <a href="{{ path('marque_index') }}">Liste des marques</a>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('marque_edit', {'id': marque.id}) }}">Editer la marque</a>
+
+        {{ include('marque/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

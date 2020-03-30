@@ -137,6 +137,12 @@ footer{
     text-align: center;
 }
 
+.marque_visuel_central {
+    margin-left: 370px;
+    width: 800px;
+    height: 600px;
+}
+
 /* media */
 .img-media-list{
     width: 100px;

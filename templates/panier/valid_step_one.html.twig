@@ -1,0 +1,37 @@
+{% extends'base.html.twig' %}
+
+{% block title %}Validation Panier - Etape 1{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="ml-4">
+            <h3>Merci de sélectionner une adresse de livraison parmi vos adresses</h3>
+            <div class="container">
+                {% if getLength(adresses) > 0 %}
+                    <div class="row">
+                        {% for adresse in adresses %}
+                            <div class="adresse-bloc mr-2 mb-4 col-5">
+                                <span class="col-6">Nom : {{ adresse.nom }}</span>
+                                <span class="col-6">Prénom : {{ adresse.prenom }}</span>
+                                {% if adresse.telephone %}
+                                    <p  class="col-12">Téléphone : {{ phoneNumber(adresse.telephone) }}</p>
+                                {% endif %}
+                                <p class="ml-3">Voie : {{ adresse.voie }}</p>
+                                <p class="ml-3">Code postal : {{ adresse.codePostal }}</p>
+                                <p class="ml-3">Ville :  {{ adresse.ville }}</p>
+                                <p class="ml-3">Pays : {{ adresse.pays }}</p>
+                                <a class="col-5" href="{{ path('address_edit', {id: adresse.id}) }}">Editer l'adresse</a>
+                                <a href="{{ path('panier_step_two', {id: adresse.id}) }}">Choisir comme adresse de livraison</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <h5>Vous n'avez aucune adresse de renseignée.</h5>
+                {% endif %}
+            </div>
+            <a class="modif-profil ml-4" href="{{ path('add_address', {id: app.user.id})  }}">Ajouter une adresse</a>
+        </div>
+    {% else %}
+        <h1>Vous n'êtes pas autorisé à accéder à cette page.</h1>
+    {% endif %}
+{% endblock %}

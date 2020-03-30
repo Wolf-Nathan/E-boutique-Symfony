@@ -46,7 +46,7 @@
         <p>Coût total du panier : {{ totalPrix }}€</p>
 
         {% if app.user %}
-            <a href="">Valider le panier</a>
+            <a href="{{ path('panier_step_one') }}">Valider le panier</a>
         {% else %}
             <span>
                 <a href="{{ path('login') }}">Connectez-vous</a>

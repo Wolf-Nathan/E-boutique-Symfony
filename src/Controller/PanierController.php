@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Jeux;
 use App\Entity\ConsoleModele;
+use App\Entity\Adresse;
+use App\Entity\Commande;
+use App\Entity\CommandeLine;
 
 class PanierController extends AbstractController
 {
@@ -117,5 +120,95 @@ class PanierController extends AbstractController
         $session->set('jeuxQuantity', $jeuxQuantity);
         $session->save();
         return $this->index($request);
+    }
+
+    /**
+     * @Route("/panier/validation-etape-1", name="panier_step_one", methods={"GET", "POST"})
+     */
+    public function validCartStepOne(){
+        $security = $this->container->get('security.token_storage');
+        $token = $security->getToken();
+        if($token){
+            /** @var \App\Entity\User $user */
+            $user = $token->getUser();
+        }
+        return $this->render('panier/valid_step_one.html.twig', [
+            'adresses' => $user->getAdresses()
+        ]);
+    }
+
+    /**
+     * @Route("/panier/validation-etape-2/{id}", name="panier_step_two", methods={"GET", "POST"})
+     */
+    public function validCartStepTwo(Request $request, Adresse $adresse)
+    {
+        $security = $this->container->get('security.token_storage');
+        $token = $security->getToken();
+        if ($token) {
+            /** @var \App\Entity\User $user */
+            $user = $token->getUser();
+
+            // Creation de la commande.
+            $commande = new Commande();
+            $commande->setValid(true);
+            $commande->setDate(new \DateTime);
+            $commande->setUser($user);
+            $commande->setAdresse($adresse);
+
+            // Ajout de la commande en base.
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($commande);
+            $entityManager->flush();
+
+            // Recuperation des articles pour creer les lignes de commandes.
+            $session = $request->getSession();
+            $jeux = $session->get('jeux');
+            $jeuxQuantity = $session->get('jeuxQuantity');
+            if ($jeux) {
+                foreach ($jeux as $jeu) {
+                    if($jeu instanceof \App\Entity\Jeux) {
+                        $commandeLine = new CommandeLine();
+                        //$entityManager->persist($commandeLine);
+                        $commandeLine->setCommande($commande);
+                        $commandeLine->setJeu($jeu);
+                        //$quantite = $jeuxQuantity[$jeu->getId()];
+                        $commandeLine->setQuantite($jeuxQuantity[$jeu->getId()]);
+                        $commandeLine->setConsole(null);
+
+                        // Ajout de la ligne de commande en base.
+                        $entityManager->merge($commandeLine);
+                        $entityManager->flush();
+                    }
+                }
+                //$this->commandeLineJeux($jeux, $jeuxQuantity, $commande);
+            }
+            $consoles = $session->get('consoles');
+            $consolesQuantity = $session->get('consolesQuantity');
+            if ($consoles) {
+                foreach ($consoles as $console) {
+                    $commandeLine = new CommandeLine();
+                    $commandeLine->setCommande($commande);
+                    $commandeLine->setConsole($console);
+                    $commandeLine->setQuantite($consolesQuantity[$console->getId()]);
+                    $commandeLine->setJeu(null);
+
+                    // Ajout de la ligne de commande en base.
+                    $entityManager->merge($commandeLine);
+                    $entityManager->flush();
+                }
+            }
+            $session->set('jeux', null);
+            $session->set('jeuxQuantity', null);
+            $session->set('consoles', null);
+            $session->set('consolesQuantity', null);
+            return $this->render('panier/valid_step_two.html.twig', [
+                'commande' => $commande,
+                'commandeId' =>$commande->getId()
+            ]);
+        }
+        return $this->render('panier/valid_step_two.html.twig', [
+            'commande' => null,
+            'commandeId' => null
+        ]);
     }
 }

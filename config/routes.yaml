@@ -25,3 +25,6 @@ panier:
 profil:
     path: /profil
     controller: App\Controller\UserController::profile
+panier_step_two:
+    path: /panier/validation-etape-2/{id}
+    controller: App\Controller\PanierController::validCartStepTwo

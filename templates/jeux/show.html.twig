@@ -6,7 +6,9 @@
     <h1 class="mb-4">{{ jeux.nom }}</h1>
 
     <div class="mb-4">
-        <img class="visuel_central" src="{{ jeux.media[0] }}" alt="{{ jeux.nom }}"/>
+        {% if getLength(jeux.media) > 0 %}
+            <img class="visuel_central" src="{{ jeux.media[0] }}" alt="{{ jeux.nom }}"/>
+        {% endif %}
         <a class="addToCart" href="{{ path('jeux_panier', {'id': jeux.id}) }}">Ajouter au panier</a>
         {% if ajout %}
             <p>L'article a bien été ajouté au panier</p>

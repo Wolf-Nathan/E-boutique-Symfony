@@ -1,43 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ConsoleModele index{% endblock %}
+{% block title %}Nos consoles{% endblock %}
 
 {% block body %}
-    <h1>ConsoleModele index</h1>
+    <h1>Nos consoles</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Prix</th>
-                <th>Console</th>
-                <th>Modèle</th>
-                <th>Marque</th>
-                <th>Date de sortie</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for console_modele in console_modeles %}
-            <tr>
-                <td>{{ console_modele.id }}</td>
-                <td>{{ console_modele.prix }}€</td>
-                <td>{{ console_modele.console }}</td>
-                <td>{{ console_modele.nom }}</td>
-                <td>{{ console_modele.marque }}</td>
-                <td>{{ console_modele.dateSortie ? console_modele.dateSortie|date('d-m-Y') : '' }}</td>
-                <td>
-                    <a href="{{ path('console_modele_show', {'id': console_modele.id}) }}">show</a>
-                    <a href="{{ path('console_modele_edit', {'id': console_modele.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <a href="{{ path('console_modele_new') }}">Ajouter un modèle de console</a>
 
-    <a href="{{ path('console_modele_new') }}">Create new</a>
+    <div class="container">
+        <div class="row">
+            {% for console_modele in console_modeles %}
+                <div class="col-4  mb-2 jeux-liste">
+                    <a href="{{ path('console_modele_show', {id: console_modele.id}) }}">
+                        <p>{{ console_modele.console }} {{ console_modele.nom }}</p>
+                        {% if getLength(console_modele.media) > 0 %}
+                            <img class="jaquette_liste" src="{{ console_modele.media[0] }}" alt="Jaquette {{ console_modele.nom }}">
+                        {% else %}
+                            <span>Pas de visuel disponible</span>
+                        {% endif %}
+                        <p>{{ console_modele.prix }}€<p>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('jeux_edit', {id: jeu.id}) }}">Editer</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}

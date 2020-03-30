@@ -21,7 +21,7 @@
                         <p>{{ console_modele.prix }}€<p>
                     </a>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('jeux_edit', {id: jeu.id}) }}">Editer</a>
+                        <a href="{{ path('console_modele_edit', {id: console_modele.id}) }}">Editer</a>
                     {% endif %}
                 </div>
             {% endfor %}

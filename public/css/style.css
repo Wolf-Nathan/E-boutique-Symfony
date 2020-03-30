@@ -125,6 +125,18 @@ footer{
     height: 600px;
 }
 
+/* marque */
+.marque_liste{
+    width: 200px;
+    height: 100px;
+}
+
+.marque-undertext {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 /* media */
 .img-media-list{
     width: 100px;

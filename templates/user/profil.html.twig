@@ -20,7 +20,7 @@
         <div class="ml-4">
             <h3>Vos adresses</h3>
             <div class="container">
-                {% if adresses %}
+                {% if getLength(adresses) > 0 %}
                     <div class="row">
                         {% for adresse in adresses %}
                             <div class="adresse-bloc mr-2 mb-4 col-5">
@@ -47,7 +47,7 @@
         <div class="ml-4 mt-4">
             <h3>Vos commandes</h3>
             <div class="container">
-                {% if commandes %}
+                {% if getLength(commandes) > 0 %}
                     <div class="row">
                         {% for commande in commandes %}
                             <div class="adresse-bloc mr-2 mb-4 col-5">

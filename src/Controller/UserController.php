@@ -23,7 +23,8 @@ class UserController extends AbstractController{
             $user = $token->getUser();
         }
         return $this->render('user/profil.html.twig', [
-            'adresses' => $user->getAdresses()
+            'adresses' => $user->getAdresses(),
+            'commandes' => $user->getCommandes()
         ]);
     }
 

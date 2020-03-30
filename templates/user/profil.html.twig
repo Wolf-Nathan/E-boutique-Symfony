@@ -44,6 +44,40 @@
             </div>
             <a class="modif-profil ml-4" href="{{ path('add_address', {id: app.user.id})  }}">Ajouter une adresse</a>
         </div>
+        <div class="ml-4">
+            <h3>Vos commandes</h3>
+            <div class="container">
+                {% if commandes %}
+                    <div class="row">
+                        {% for commande in commandes %}
+                            <div class="adresse-bloc mr-2 mb-4 col-5">
+                                <h4>Commande n°{{ commande.id }}</h4>
+                                {% for commandeLine in commande.commandeLines %}
+                                    <p class="col-12">
+                                        {% if commandeLine.jeu %}
+                                            {{ commandeLine.jeu }}
+                                        {% elseif commandeLine.console %}
+                                            {{ commandeLine.console }}
+                                        {% endif %}
+                                         Quantité : {{ commandeLine.quantite }}
+                                    </p>
+                                {% endfor %}
+                                <h5>Adresse de livraison</h5>
+                                <span class="col-6">Nom : {{ commande.user.nom }}</span>
+                                <span class="col-6">Prénom : {{ commande.user.prenom }}</span>
+                                {% if commande.adresse.telephone %}
+                                    <p  class="col-12">Téléphone : {{ phoneNumber(commande.adresse.telephone) }}</p>
+                                {% endif %}
+                                <p class="ml-3">Voie : {{ commande.adresse.voie }}</p>
+                                <p class="ml-3">Code postal : {{ commande.adresse.codePostal }}</p>
+                                <p class="ml-3">Ville :  {{ commande.adresse.ville }}</p>
+                                <p class="ml-3">Pays : {{ commande.adresse.pays }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     {% else %}
         <h1>Merci de vous <a href="{{ path('login') }}">connecter</a> ou de vous <a href="{{ path('register') }}">inscrire !</a></h1>
     {% endif %}

@@ -13,6 +13,12 @@ console_modele_list:
 marque_list:
     path: /marque/
     controller:  App\Controller\MarqueController::index
+categorie_list:
+    path: /categorie/
+    controller: App\Controller\CategorieController:index
+media_list:
+    path: /media/
+    controller: App\Controller\MediaController:index
 login:
     path: /login
 logout:

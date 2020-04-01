@@ -108,6 +108,10 @@ footer{
     margin: auto;
 }
 
+.home-block a:hover{
+    text-decoration: none;
+}
+
 /* jeux */
 .jaquette_liste {
     width: 100px;

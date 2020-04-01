@@ -77,7 +77,10 @@ body h1 {
 
 /* footer */
 footer{
-    background-color : royalblue;
+    background-color : #A0A0A0;
+    padding: 5px;
+    position: absolute;
+    min-width: 100%;
 }
 
 /* homepage */

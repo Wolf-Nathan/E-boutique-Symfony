@@ -52,6 +52,12 @@
                 <th>Description</th>
                 <td>{{ jeux.description }}</td>
             </tr>
+            {% if jeux.categorie %}
+                <tr>
+                    <th>Catégorie</th>
+                    <td>{{ jeux.categorie }}</td>
+                </tr>
+            {% endif %}
             <tr>
                 <th>Prix</th>
                 <td>{{ jeux.prix }}€</td>

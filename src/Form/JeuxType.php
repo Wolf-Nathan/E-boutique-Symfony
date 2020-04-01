@@ -19,6 +19,8 @@ class JeuxType extends AbstractType
             ->add('dateSortie')
             ->add('marque')
             ->add('console')
+            //->add('media')
+            ->add('categorie')
         ;
     }
 

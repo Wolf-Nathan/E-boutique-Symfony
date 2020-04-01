@@ -7,7 +7,20 @@
 
     <a href="{{ path('jeux_new') }}">Ajouter un jeu</a>
 
-    <div class="container">
+    <div class="container mt-1 mb-2 categories-block">
+        <h3>Filtrer les jeux par catégories</h3>
+        <div class="row ml-4">
+            <a class="game-category-link" href="{{ path('jeux_index') }}">Tout les jeux</a>
+            {% for categorie in categories %}
+                <a class="game-category-link" href="{{ path('jeux_index_filtre', {nom: categorie.nom}) }}">{{ categorie.nom }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container mt-2">
+        <h3>
+            Liste des jeux {% if filtre != null %} de {{ filtre.nom }} {% endif %}
+        </h3>
         <div class="row">
         {% for jeu in jeux %}
             <div class="col-4  mb-2 jeux-liste">

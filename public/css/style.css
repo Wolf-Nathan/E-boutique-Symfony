@@ -113,6 +113,22 @@ footer{
     text-decoration : none;
 }
 
+.categories-block {
+    background-color : #C0C0C0;
+    border-radius : 8px;
+    padding-top: 2px;
+    padding-bottom: 4px;
+}
+
+.game-category-link {
+    margin-right: 12px;
+}
+
+.game-category-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
 /* console_modele */
 .console_liste {
     width: 200px;

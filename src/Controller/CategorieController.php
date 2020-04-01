@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
+use App\Repository\JeuxRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,12 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @name \App\Controller\CategorieController
- * @Route("/categorie")
  */
 class CategorieController extends AbstractController {
 
     /**
-     * @Route("/", name="categorie_index", methods={"GET"})
+     * @Route("/categorie/", name="categorie_index", methods={"GET"})
      */
     public function index(CategorieRepository $categorieRepository): Response
     {
@@ -27,7 +27,7 @@ class CategorieController extends AbstractController {
     }
 
     /**
-     * @Route("/new", name="categorie_new", methods={"GET","POST"})
+     * @Route("/categorie/new", name="categorie_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -50,7 +50,7 @@ class CategorieController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}/edit", name="categorie_edit", methods={"GET","POST"})
+     * @Route("/categorie/{id}/edit", name="categorie_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Categorie $categorie): Response
     {
@@ -70,7 +70,7 @@ class CategorieController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="categorie_delete", methods={"DELETE"})
+     * @Route("/categorie/{id}", name="categorie_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Categorie $categorie): Response
     {
@@ -81,5 +81,22 @@ class CategorieController extends AbstractController {
         }
 
         return $this->redirectToRoute('categorie_index');
+    }
+
+    /**
+     * @Route("/jeux/categorie-{nom}", name="jeux_index_filtre", methods={"GET"})
+     */
+    public function indexFilter(JeuxRepository $jeuxRepository, CategorieRepository $categorieRepository, Categorie $categorie): Response
+    {
+        if($categorie) {
+            return $this->render('jeux/index.html.twig', [
+                'jeux' => $jeuxRepository->findByCategorie($categorie),
+                'categories' => $categorieRepository->findAll(),
+                'filtre' => $categorie
+            ]);
+        }
+        else{
+            return (new \App\Controller\JeuxController)->index($jeuxRepository, $categorieRepository);
+        }
     }
 }

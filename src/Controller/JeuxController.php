@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\Jeux;
 use App\Form\JeuxType;
 use App\Repository\JeuxRepository;
@@ -23,7 +24,8 @@ class JeuxController extends AbstractController
     {
         return $this->render('jeux/index.html.twig', [
             'jeux' => $jeuxRepository->findAll(),
-            'categories' => $categorieRepository->findAll()
+            'categories' => $categorieRepository->findAll(),
+            'filtre' => null
         ]);
     }
 
@@ -132,4 +134,6 @@ class JeuxController extends AbstractController
             'ajout' => true
         ]);
     }
+
+
 }

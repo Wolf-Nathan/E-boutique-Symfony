@@ -10,9 +10,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: blue;
+    color: #3A85FA;
     background: #EEEEFF;
     height: 35px;
+}
+
+.menu a:hover {
+    text-decoration: none;
 }
 
 .menu img {

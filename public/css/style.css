@@ -224,9 +224,12 @@ footer{
 }
 
 .adresse-bloc {
-    border: 4px solid black;
+    border-radius: 5px;
+    border-color: #555555;
+    border: solid 2px;
     padding: 4px;
-    background-color: darkgrey;
+    padding-left: 8px;
+    background-color: #C0C0C0;
 }
 
 .adresse-bloc a {

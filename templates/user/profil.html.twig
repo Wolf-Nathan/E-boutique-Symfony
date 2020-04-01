@@ -22,8 +22,9 @@
             <div class="container">
                 {% if getLength(adresses) > 0 %}
                     <div class="row">
-                        {% for adresse in adresses %}
+                        {% for key, adresse in adresses %}
                             <div class="adresse-bloc mr-2 mb-4 col-5">
+                                <h4>Adresse n°{{ key + 1 }}</h4>
                                 <span class="col-6">Nom : {{ adresse.nom }}</span>
                                 <span class="col-6">Prénom : {{ adresse.prenom }}</span>
                                 {% if adresse.telephone %}

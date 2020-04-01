@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Jeux;
 use App\Form\JeuxType;
 use App\Repository\JeuxRepository;
+use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,11 @@ class JeuxController extends AbstractController
     /**
      * @Route("/", name="jeux_index", methods={"GET"})
      */
-    public function index(JeuxRepository $jeuxRepository): Response
+    public function index(JeuxRepository $jeuxRepository, CategorieRepository $categorieRepository): Response
     {
         return $this->render('jeux/index.html.twig', [
             'jeux' => $jeuxRepository->findAll(),
+            'categories' => $categorieRepository->findAll()
         ]);
     }
 
@@ -53,9 +55,6 @@ class JeuxController extends AbstractController
      */
     public function show(Jeux $jeux): Response
     {
-        if(isset($_SESSION)){
-            var_dump($_SESSION);
-        }
         return $this->render('jeux/show.html.twig', [
             'jeux' => $jeux,
             'ajout' => false

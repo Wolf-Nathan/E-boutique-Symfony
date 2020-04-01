@@ -86,6 +86,15 @@ footer{
     width: 150px;
 }
 
+.home-block {
+    width: 60%;
+    margin: auto;
+}
+
+.home-block a:hover{
+    text-decoration: none;
+}
+
 /* admin */
 
 .admin-block {
@@ -103,12 +112,15 @@ footer{
     color: white;
 }
 
-.home-block {
-    width: 60%;
-    margin: auto;
+.admin-link {
+    background-color: red;
+    padding: 5px;
+    border-color: darkred;
+    color: white;
 }
 
-.home-block a:hover{
+.admin-link:hover {
+    color: white;
     text-decoration: none;
 }
 

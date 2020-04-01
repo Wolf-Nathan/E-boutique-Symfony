@@ -7,7 +7,9 @@
 
     <h5 class="marque-undertext">Cliquez sur une marque pour découvrir tout son univers !</h5>
 
-    <a href="{{ path('marque_new') }}">Ajouter une nouvelle marque</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="ml-2 admin-link" href="{{ path('marque_new') }}">Ajouter une nouvelle marque</a>
+    {% endif %}
 
     <div class="container">
         <div class="row">
@@ -21,7 +23,7 @@
                         {% endif %}
                     </a>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('marque_edit', {id: marque.id}) }}">Editer</a>
+                        <a class="admin-link" href="{{ path('marque_edit', {id: marque.id}) }}">Editer</a>
                     {% endif %}
                 </div>
             {% endfor %}

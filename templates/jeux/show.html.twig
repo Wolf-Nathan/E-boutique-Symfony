@@ -71,9 +71,11 @@
 
     <a href="{{ path('jeux_index') }}">Liste des jeux</a>
 
-{#{% if is_granted('ROLE_ADMIN') %}#}
-        <a href="{{ path('jeux_edit', {'id': jeux.id}) }}">Editer le jeu</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="admin-link" href="{{ path('jeux_edit', {'id': jeux.id}) }}">Editer le jeu</a>
 
-        {{ include('jeux/_delete_form.html.twig') }}
-{#{% endif %}#}
+        <div class="mt-4 mb-2">
+            {{ include('jeux/_delete_form.html.twig') }}
+        </div>
+    {% endif %}
 {% endblock %}

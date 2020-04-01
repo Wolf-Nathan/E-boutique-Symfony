@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Nos consoles</h1>
 
-    <a href="{{ path('console_modele_new') }}">Ajouter un modèle de console</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="ml-2 admin-link" href="{{ path('console_modele_new') }}">Ajouter un modèle de console</a>
+    {% endif %}
 
     <div class="container">
         <div class="row">
@@ -21,7 +23,7 @@
                         <p>{{ console_modele.prix }}€<p>
                     </a>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('console_modele_edit', {id: console_modele.id}) }}">Editer</a>
+                        <a class="admin-link" href="{{ path('console_modele_edit', {id: console_modele.id}) }}">Editer</a>
                     {% endif %}
                 </div>
             {% endfor %}

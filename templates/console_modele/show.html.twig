@@ -48,8 +48,10 @@
     <a href="{{ path('console_modele_index') }}">Liste des consoles</a>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('console_modele_edit', {'id': jeux.id}) }}">Editer le modèle</a>
+        <a class="admin-link" href="{{ path('console_modele_edit', {'id': console_modele.id}) }}">Editer le modèle</a>
 
-        {{ include('console_modele/_delete_form.html.twig') }}
+        <div class="mt-4 mb-2">
+            {{ include('console_modele/_delete_form.html.twig') }}
+        </div>
     {% endif %}
 {% endblock %}

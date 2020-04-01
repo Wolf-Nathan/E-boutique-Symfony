@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Nos jeux</h1>
 
-    <a class="ml-2" href="{{ path('jeux_new') }}">Ajouter un jeu</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="ml-2 admin-link" href="{{ path('jeux_new') }}">Ajouter un jeu</a>
+    {% endif %}
 
     <div class="container mt-1 mb-2 categories-block">
         <h3>Filtrer les jeux par catégories</h3>
@@ -44,7 +46,7 @@
                     <p> Age recommandé : {{ jeu.ageMini }} ans et +</p>
                 </a>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('jeux_edit', {id: jeu.id}) }}">Editer</a>
+                    <a class="admin-link" href="{{ path('jeux_edit', {id: jeu.id}) }}">Editer</a>
                 {% endif %}
             </div>
         {% endfor %}

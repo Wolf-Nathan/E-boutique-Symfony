@@ -13,7 +13,7 @@
 
 
     {% if getLength(marque.jeux) > 0 %}
-        <div class="ml-4">
+        <div class="m-4">
             <h3>Les jeux {{ marque.nom }}</h3>
             <div class="container">
                 <div class="row">
@@ -34,7 +34,7 @@
     {% endif %}
 
     {% if getLength(marque.consoles) > 0 %}
-        <div class="ml-4">
+        <div class="m-4">
             <h3>Les consoles {{ marque.nom }}</h3>
             <div class="container">
                 <div class="row">
@@ -57,8 +57,10 @@
     <a href="{{ path('marque_index') }}">Liste des marques</a>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('marque_edit', {'id': marque.id}) }}">Editer la marque</a>
+        <a class="admin-link" href="{{ path('marque_edit', {'id': marque.id}) }}">Editer la marque</a>
 
-        {{ include('marque/_delete_form.html.twig') }}
+        <div class="mt-4 mb-2">
+            {{ include('marque/_delete_form.html.twig') }}
+        </div>
     {% endif %}
 {% endblock %}

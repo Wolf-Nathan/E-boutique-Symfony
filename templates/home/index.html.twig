@@ -4,61 +4,69 @@
 
 {% block body %}
     <h1>Bienvenue sur notre boutique !</h1>
-    {% if is_granted('ROLE_ADMIN') %}
-        <h3>Vous êtes connecté en tant qu'administrateur.</h3>
-    {% endif %}
     {% if app.user %}
-        <h5>Bonjour {{ app.user.prenom }} {{ app.user.nom }}</h5>
+        <h5 class="ml-4">Bonjour {{ app.user.prenom }} {{ app.user.nom }}</h5>
     {% endif %}
-    <ul>
-        <li>
-            <a href="{{ path('jeux_list') }}">Jeux</a>
-        </li>
-        <li>
-            <a href="{{ path('console_list') }}">Consoles</a>
-        </li>
-        <li>
-            <a href="{{ path('console_modele_list') }}">Modèles de console</a>
-        </li>
-        <li>
-            <a href="{{ path('marque_list') }}">Marques</a>
-        </li>
-    </ul>
-    <div class="ml-3">
-        <h3>Nos derniers jeux</h3>
-        <div class="ml-3 mt-3 container md-12">
-            <div class="row">
-                {#<button> < </button>#}
-                {% for jeu in jeux %}
-                    <a class="ml-3" href="{{ path('jeux_show', {'id': jeu.id}) }}">
-                        <div>
-                        {% if getLength(jeu.media) %}
-                            <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="{{ jeu.nom }}">
-                        {% else %}
-                            {{ jeu.nom }}
-                        {% endif %}
-                        </div>
-                    </a>
-                {% endfor %}
-                {#<button class="ml-3"> > </button>#}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin-block">
+            <h3>Vous êtes connecté en tant qu'administrateur.</h3>
+            <ul>
+                <li>
+                    <a href="{{ path('jeux_list') }}">Gérer les jeux</a>
+                </li>
+                <li>
+                    <a href="{{ path('console_list') }}">Gérer les consoles</a>
+                </li>
+                <li>
+                    <a href="{{ path('console_modele_list') }}">Gérer les modèles de consoles</a>
+                </li>
+                <li>
+                    <a href="{{ path('marque_list') }}">Gérer les marques</a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="center-block home-block">
+                <h3>Nos derniers jeux</h3>
+                <div class="ml-3 mt-3 container md-12">
+                    <div class="row">
+                        {#<button> < </button>#}
+                        {% for jeu in jeux %}
+                            <a class="ml-3" href="{{ path('jeux_show', {'id': jeu.id}) }}">
+                                <div>
+                                {% if getLength(jeu.media) %}
+                                    <img class="jaquette_liste" src="{{ jeu.media[0] }}" alt="{{ jeu.nom }}">
+                                {% else %}
+                                    {{ jeu.nom }}
+                                {% endif %}
+                                </div>
+                            </a>
+                        {% endfor %}
+                        {#<button class="ml-3"> > </button>#}
+                    </div>
+                </div>
+                <div class="mt-5 mb-5">
+                    <a class="home-link-btn" href="{{ path('jeux_list') }}">Voir tout nos jeux</a>
+                </div>
+            </div>
+
+        <div class="center-block home-block">
+            <h3>Nos marques</h3>
+            {% for marque in marques %}
+                <a class="ml-3" href="{{ path('marque_show', {'id': marque.id}) }}">
+                    {%if getLength(marque.media) %}
+                        <img class="logo" src="{{ marque.media[0] }}" alt="{{ marque.nom }}">
+                    {%else %}
+                        {{ marque.nom }}
+                    {%endif %}
+                </a>
+            {% endfor %}
+            <div class="mt-5 mb-5">
+                <a class="home-link-btn" href="{{ path('marque_list') }}">Voir toutes nos marques</a>
             </div>
         </div>
-        <div class="mt-5 mb-5">
-            <a class="home-link-btn" href="{{ path('jeux_list') }}">Voir tout nos jeux</a>
         </div>
-    </div>
-    <div class="ml-3">
-        <h3>Nos marques</h3>
-        <button> < </button>
-        {% for marque in marques %}
-            <a class="ml-3" href="{{ path('marque_show', {'id': marque.id}) }}">
-                {%if getLength(marque.media) %}
-                    <img class="logo" src="{{ marque.media[0] }}" alt="{{ marque.nom }}">
-                {%else %}
-                    {{ marque.nom }}
-                {%endif %}
-            </a>
-        {% endfor %}
-        <button class="ml-3"> > </button>
     </div>
 {% endblock body %}

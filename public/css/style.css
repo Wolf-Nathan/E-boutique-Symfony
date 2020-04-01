@@ -86,6 +86,28 @@ footer{
     width: 150px;
 }
 
+/* admin */
+
+.admin-block {
+    background-color: red;
+    margin-left: 300px;
+    margin-right: 300px;
+    border: solid darkred 5px;
+}
+
+.admin-block h3 {
+    text-align: center;
+}
+
+.admin-block a {
+    color: white;
+}
+
+.home-block {
+    width: 60%;
+    margin: auto;
+}
+
 /* jeux */
 .jaquette_liste {
     width: 100px;

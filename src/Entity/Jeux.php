@@ -64,6 +64,11 @@ class Jeux
      */
     private $commandeLines;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="jeux")
+     */
+    private $categorie;
+
     public function __construct()
     {
         $this->console = new ArrayCollection();
@@ -237,6 +242,18 @@ class Jeux
                 $commandeLine->setJeu(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

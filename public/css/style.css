@@ -150,6 +150,11 @@ footer{
     padding: 5px;
 }
 
+.addToCart:hover {
+    color: white;
+    text-decoration: none;
+}
+
 .jeux-liste {
     text-align: center;
 }
@@ -252,6 +257,51 @@ footer{
 /* cart */
 
 .cart-icon{
+    background-color: white;
     height : 20px;
     width : 20px;
+}
+
+.cart-icon:hover{
+    background-color: #3A85FA;
+    text-decoration: none;
+}
+
+.cart-games {
+    background-color : #C0C0C0;
+    border: solid black 2px;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 80%;
+}
+
+.cart-consoles {
+    background-color : #C0C0C0;
+    border: solid black 2px;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 80%;
+}
+
+.cart-valid {
+    background-color: blue;
+    padding: 8px;
+    color: white;
+    border-radius: 3px;
+}
+
+.cart-valid:hover {
+    text-decoration : none;
+    color: #EEEEEE;
+}
+
+.cart-final-link {
+    color: black;
+}
+
+.cart-final-link:hover {
+    text-decoration : none;
+    color: black;
 }

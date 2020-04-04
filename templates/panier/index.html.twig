@@ -3,6 +3,7 @@
 {% block title %}Panier{% endblock %}
 
 {% block body %}
+    <div class="container">
     {% if app.user %}
         <h2> Votre panier {{ app.user.prenom }} {{ app.user.nom }}</h2>
     {% else %}
@@ -10,8 +11,9 @@
     {% endif %}
     {% if totalArticles > 0 %}
         {% if totalConsole > 0 %}
+            <h3 class="ml-3 mt-3">Consoles dans le panier</h3>
             <div class="container">
-                <div class="row">
+                <div class="col cart-consoles mb-4">
                     {% for console in consoles %}
                         <div class=" md-12 mb-2">
                             <span>{{ console.nom }}</span>
@@ -31,8 +33,9 @@
             </div>
         {% endif %}
         {% if totalJeux > 0 %}
+            <h3 class="ml-3">Jeux dans le panier</h3>
             <div class="container">
-                <div class="col">
+                <div class="col cart-games">
                     {% for jeu in jeux %}
                         <div class=" md-12 mb-2">
                             <span>{{ jeu.nom }}</span>
@@ -51,11 +54,11 @@
                 </div>
             </div>
         {% endif %}
-        <p>Nombre total d'articles dans le panier : {{ totalArticles }}</p>
+        <p class="mt-3">Nombre total d'articles dans le panier : {{ totalArticles }}</pclas>
         <p>Coût total du panier : {{ totalPrix }}€</p>
 
         {% if app.user %}
-            <a href="{{ path('panier_step_one') }}">Valider le panier</a>
+            <a class="cart-valid" href="{{ path('panier_step_one') }}">Valider le panier</a>
         {% else %}
             <span>
                 <a href="{{ path('login') }}">Connectez-vous</a>
@@ -68,4 +71,5 @@
     {% else %}
         <h1>Votre panier est vide !</h1>
     {% endif %}
+    </div>
 {% endblock body %}

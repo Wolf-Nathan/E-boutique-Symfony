@@ -44,8 +44,9 @@ class PanierController extends AbstractController
         $totalPrixConsole = 0;
         if($consoles) {
             foreach ($consoles as $console) {
-                $totalConsole++;
-                $totalPrixConsole = $totalPrixConsole + $console->getPrix();
+                $totalConsole = $totalConsole + $consolesQuantity[$console->getId()];
+                $prix = $console->getPrix() * $consolesQuantity[$console->getId()];
+                $totalPrixConsole = $totalPrixConsole + $prix;
             }
         }
 

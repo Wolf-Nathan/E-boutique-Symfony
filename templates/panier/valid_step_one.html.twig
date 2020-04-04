@@ -3,6 +3,7 @@
 {% block title %}Validation Panier - Etape 1{% endblock %}
 
 {% block body %}
+    <div class="container">
     {% if app.user %}
         <div class="ml-4">
             <h3>Merci de sélectionner une adresse de livraison parmi vos adresses</h3>
@@ -26,7 +27,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <h5>Vous n'avez aucune adresse de renseignée.</h5>
+                    <h5 class="mb-4 ml-3 mt-4">Vous n'avez aucune adresse de renseignée.</h5>
                 {% endif %}
             </div>
             <a class="modif-profil ml-4" href="{{ path('add_address', {id: app.user.id})  }}">Ajouter une adresse</a>
@@ -34,4 +35,5 @@
     {% else %}
         <h1>Vous n'êtes pas autorisé à accéder à cette page.</h1>
     {% endif %}
+    </div>
 {% endblock %}

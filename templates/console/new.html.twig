@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Console{% endblock %}
+{% block title %}Ajouter une console{% endblock %}
 
 {% block body %}
-    <h1>Create new Console</h1>
+    <h1>Ajouter une nouvelle console</h1>
 
-    {{ include('console/_form.html.twig') }}
+    <div class="container">
+        {{ include('console/_form.html.twig') }}
 
-    <a href="{{ path('console_index') }}">back to list</a>
+        <a href="{{ path('console_index') }}">Retourner à la liste des consoles</a>
+    </div>
 {% endblock %}

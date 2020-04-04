@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Ajouter une nouvelle catégorie</h1>
 
-    {{ include('categorie/_form.html.twig') }}
+    <div class="container">
+        {{ include('categorie/_form.html.twig') }}
 
-    <a href="{{ path('categorie_index') }}">Retourner à la liste des catégories</a>
+        <a href="{{ path('categorie_index') }}">Retourner à la liste des catégories</a>
+    </div>
 {% endblock %}

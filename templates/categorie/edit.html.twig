@@ -5,9 +5,11 @@
 {% block body %}
     <h1>Editer la catégorie {{ categorie.nom }}</h1>
 
-    {{ include('categorie/_form.html.twig', {'button_label': 'Modifier la catégorie'}) }}
+    <div class="container">
+        {{ include('categorie/_form.html.twig', {'button_label': 'Modifier la catégorie'}) }}
 
-    <a href="{{ path('categorie_index') }}">Retourner à la liste des catégories</a>
+        <a href="{{ path('categorie_index') }}">Retourner à la liste des catégories</a>
 
-    {{ include('categorie/_delete_form.html.twig') }}
+        {{ include('categorie/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

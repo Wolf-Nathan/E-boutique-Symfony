@@ -3,24 +3,35 @@
 {% block title %}Console{% endblock %}
 
 {% block body %}
-    <h1>Console</h1>
+    <h1 class="mb-4">{{ console.nom }}</h1>
+
+    <div class="mb-4">
+        {% if getLength(console.media) > 0 %}
+            <img class="console_visuel_central" src="{{ console.media[0] }}" alt="{{ console.nom }}"/>
+        {% endif %}
+    </div>
+
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ console.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ console.nom }}</td>
-            </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ console.nom }}</td>
+        </tr>
+        <tr>
+            <th>Marque</th>
+            <td>{{ console.marque }}</td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('console_index') }}">back to list</a>
+    <a href="{{ path('console_index') }}">Liste des consoles</a>
 
-    <a href="{{ path('console_edit', {'id': console.id}) }}">edit</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="admin-link" href="{{ path('console_edit', {'id': console.id}) }}">Editer la console</a>
 
-    {{ include('console/_delete_form.html.twig') }}
+        <div class="mt-4 mb-2">
+            {{ include('console/_delete_form.html.twig') }}
+        </div>
+    {% endif %}
 {% endblock %}

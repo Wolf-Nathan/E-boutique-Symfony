@@ -1,46 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Console index{% endblock %}
+{% block title %}Consoles{% endblock %}
 
 {% block body %}
-    <h1>Console index</h1>
+    <h1>Consoles</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Marque</th>
-                <th>Jeux</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for console in consoles %}
-            <tr>
-                <td>{{ console.id }}</td>
-                <td>{{ console.nom }}</td>
-                <td>{{ console.marque }}</td>
-                <td>
-                    {% for key,jeu in console.jeux %}
-                        {% if key > 0 %}
-                        ,
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="ml-2 admin-link" href="{{ path('console_new') }}">Ajouter une console</a>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            {% for console in consoles %}
+                <div class="col-4  mb-2 jeux-liste">
+                    <a href="{{ path('console_show', {id: console.id}) }}">
+                        <p>{{ console.nom }}</p>
+                        {% if getLength(console.media) > 0 %}
+                            <img class="console_liste" src="{{ console.media[0] }}" alt="Console {{ console.nom }}">
+                        {% else %}
+                            <span>Pas de visuel disponible</span>
                         {% endif %}
-                        {{ jeu }}
-                    {% endfor %}
-                </td>
-                <td>
-                    <a href="{{ path('console_show', {'id': console.id}) }}">show</a>
-                    <a href="{{ path('console_edit', {'id': console.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">Aucune console trouvée !</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('console_new') }}">Create new</a>
+                        <p>{{ console.marque }}<p>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="admin-link" href="{{ path('console_edit', {id: console.id}) }}">Editer</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

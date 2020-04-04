@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit ConsoleModele{% endblock %}
+{% block title %}Editer {{ console_modele.console }} {{ console_modele.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Edit ConsoleModele</h1>
+    <h1>Editer {{ console_modele.console }} {{ console_modele.nom }}</h1>
 
-    {{ include('console_modele/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="container">
+        {{ include('console_modele/_form.html.twig', {'button_label': 'Modifer le modèle de console'}) }}
 
-    <a href="{{ path('console_modele_index') }}">back to list</a>
+        <a href="{{ path('console_modele_index') }}">Retourner à la liste des modèles de console</a>
 
-    {{ include('console_modele/_delete_form.html.twig') }}
+        {{ include('console_modele/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

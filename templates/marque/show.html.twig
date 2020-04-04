@@ -42,7 +42,7 @@
                         <a class="ml-3" href="{{ path('console_show', {'id': console.id}) }}">
                             <div>
                                 {% if getLength(console.media) %}
-                                    <img class="jaquette_liste" src="{{ console.media[0] }}" alt="{{ console.nom }}">
+                                    <img class="console_liste" src="{{ console.media[0] }}" alt="{{ console.nom }}">
                                 {% else %}
                                     {{ console.nom }}
                                 {% endif %}

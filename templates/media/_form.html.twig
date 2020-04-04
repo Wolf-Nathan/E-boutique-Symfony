@@ -1,4 +1,62 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {#{{ form_widget(form) }}#}
+    {{ form_errors(form) }}
+    <div class="form-group">
+        {{ form_label(form.type, "Type du média", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_errors(form.type) }}
+            {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.path, "Adresse du média", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_errors(form.path) }}
+            {{ form_widget(form.path, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.alt, "Description", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_errors(form.alt) }}
+            {{ form_widget(form.alt, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.jeux, "Média associé au jeu", {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_errors(form.jeux) }}
+            {{ form_widget(form.jeux, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.console, "Média associé à la console", {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_errors(form.console) }}
+            {{ form_widget(form.console, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.ConsoleModele, "Média associé au modèle de console", {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_errors(form.ConsoleModele) }}
+            {{ form_widget(form.ConsoleModele, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.marque, "Média associé à la marque", {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_errors(form.marque) }}
+            {{ form_widget(form.marque, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    {{ form_rest(form) }}
+    <button class="btn">{{ button_label|default('Sauvegarder') }}</button>
 {{ form_end(form) }}

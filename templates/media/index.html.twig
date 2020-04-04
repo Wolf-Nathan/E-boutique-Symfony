@@ -1,37 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Media index{% endblock %}
+{% block title %}Média{% endblock %}
 
 {% block body %}
-    <h1>Media index</h1>
+    <h1>Média</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for medium in media %}
-            <tr>
-                <td>{{ medium.id }}</td>
-                <td>{{ medium.type }}</td>
-                <td><img class="img-media-list" src="{{ medium.path }}" alt="{{ medium.alt }}"/></td>
-                <td>
-                    <a href="{{ path('media_show', {'id': medium.id}) }}">show</a>
-                    <a href="{{ path('media_edit', {'id': medium.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Type</th>
+                    <th>Image</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for medium in media %}
+                <tr>
+                    <td>{{ medium.id }}</td>
+                    <td>{{ medium.type }}</td>
+                    <td><img class="img-media-list" src="{{ medium.path }}" alt="{{ medium.alt }}"/></td>
+                    <td>
+                        <a href="{{ path('media_edit', {'id': medium.id}) }}">Editer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun média trouvé !</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('media_new') }}">Create new</a>
+        <a class="admin-link" href="{{ path('media_new') }}">Ajouter un nouveau média</a>
+    </div>
 {% endblock %}

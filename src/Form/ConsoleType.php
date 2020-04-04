@@ -14,7 +14,6 @@ class ConsoleType extends AbstractType
         $builder
             ->add('nom')
             ->add('marque')
-            ->add('jeux')
         ;
     }
 

@@ -87,6 +87,12 @@ footer{
     min-width: 100%;
 }
 
+.copyright{
+    margin-top: 50px;
+    text-align: center;
+    color: white;
+}
+
 /* homepage */
 .logo {
     height : 80px;
